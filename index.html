@@ -2522,31 +2522,61 @@
         calculateButton: 'Calculate Qualification',
         results: {
           qualificationSummary: 'Mortgage Qualification Summary',
-          maxAmount: 'Maximum Qualification Amount',
-          mortgageAmount: 'Mortgage Amount',
-          monthlyPayment: 'Monthly Payment',
-          propertyTax: 'Property Tax',
-          schoolTax: 'School Tax',
-          cmhcInsurance: 'CMHC Insurance Premium',
-          downPayment: 'Down Payment',
-          stressTest: 'Stress Test Rate',
-          ratios: {
-            gds: 'GDS Ratio',
-            tds: 'TDS Ratio',
-            details: 'View Ratio Details'
-          },
-          status: {
+          qualification: {
             approved: 'Approved',
             conditions: 'Approved with Conditions',
             denied: 'Not Qualified'
           },
+          paymentBreakdown: 'Monthly Payment Breakdown',
+          recommendations: 'Recommendations',
+          maxAmount: {
+            label: 'Maximum Qualification Amount',
+            note: 'Based on your income and debt ratios'
+          },
+          mortgageDetails: {
+            amount: 'Mortgage Amount',
+            term: 'Mortgage Term',
+            payment: 'Monthly Payment',
+            frequency: {
+              title: 'Payment Options',
+              monthly: 'Monthly Payment',
+              biweekly: 'Bi-Weekly Payment',
+              weekly: 'Weekly Payment'
+            }
+          },
+          insurance: {
+            cmhc: 'CMHC Insurance Premium',
+            tax: 'Insurance Premium Tax',
+            total: 'Total Insurance Cost'
+          },
+          taxes: {
+            property: 'Property Tax',
+            school: 'School Tax',
+            monthly: 'Monthly Tax Payment'
+          },
+          ratios: {
+            gds: 'GDS Ratio',
+            tds: 'TDS Ratio',
+            details: 'View Ratio Details',
+            stress: 'Stress Test Rate',
+            threshold: 'Threshold'
+          },
           buttons: {
             recalculate: 'Recalculate',
-            saveScenario: 'Save Scenario',
-            printResults: 'Print Results',
-            compare: 'Compare Scenarios'
+            save: 'Save Scenario',
+            print: 'Print Results',
+            compare: 'Compare Scenarios',
+            clear: 'Clear Scenarios'
+          },
+          chart: {
+            principal: 'Principal',
+            interest: 'Interest',
+            propertyTax: 'Property Tax',
+            schoolTax: 'School Tax',
+            heating: 'Heating',
+            condoFees: 'Condo Fees'
           }
-        },
+        }
       },
       fr: {
         mainTitle: 'Calculateur de qualification hypothécaire de Montréal',
@@ -2618,31 +2648,61 @@
         calculateButton: 'Calculer la qualification',
         results: {
           qualificationSummary: 'Résumé de Qualification Hypothécaire',
-          maxAmount: 'Montant Maximum de Qualification',
-          mortgageAmount: 'Montant du Prêt',
-          monthlyPayment: 'Paiement Mensuel',
-          propertyTax: 'Taxe Foncière',
-          schoolTax: 'Taxe Scolaire',
-          cmhcInsurance: 'Prime d\'Assurance SCHL',
-          downPayment: 'Mise de Fonds',
-          stressTest: 'Taux du Test de Résistance',
-          ratios: {
-            gds: 'Ratio ABD',
-            tds: 'Ratio ATD',
-            details: 'Voir les Détails des Ratios'
-          },
-          status: {
+          qualification: {
             approved: 'Approuvé',
             conditions: 'Approuvé avec Conditions',
             denied: 'Non Qualifié'
           },
+          paymentBreakdown: 'Répartition des Paiements Mensuels',
+          recommendations: 'Recommandations',
+          maxAmount: {
+            label: 'Montant Maximum de Qualification',
+            note: 'Basé sur vos revenus et ratios d\'endettement'
+          },
+          mortgageDetails: {
+            amount: 'Montant du Prêt',
+            term: 'Durée du Prêt',
+            payment: 'Paiement Mensuel',
+            frequency: {
+              title: 'Options de Paiement',
+              monthly: 'Paiement Mensuel',
+              biweekly: 'Paiement Bimensuel',
+              weekly: 'Paiement Hebdomadaire'
+            }
+          },
+          insurance: {
+            cmhc: 'Prime d\'Assurance SCHL',
+            tax: 'Taxe sur Prime d\'Assurance',
+            total: 'Coût Total d\'Assurance'
+          },
+          taxes: {
+            property: 'Taxe Foncière',
+            school: 'Taxe Scolaire',
+            monthly: 'Paiement Mensuel des Taxes'
+          },
+          ratios: {
+            gds: 'Ratio ABD',
+            tds: 'Ratio ATD',
+            details: 'Voir les Détails des Ratios',
+            stress: 'Taux du Test de Résistance',
+            threshold: 'Seuil'
+          },
           buttons: {
             recalculate: 'Recalculer',
-            saveScenario: 'Enregistrer le Scénario',
-            printResults: 'Imprimer les Résultats',
-            compare: 'Comparer les Scénarios'
+            save: 'Enregistrer le Scénario',
+            print: 'Imprimer les Résultats',
+            compare: 'Comparer les Scénarios',
+            clear: 'Effacer les Scénarios'
+          },
+          chart: {
+            principal: 'Principal',
+            interest: 'Intérêt',
+            propertyTax: 'Taxe Foncière',
+            schoolTax: 'Taxe Scolaire',
+            heating: 'Chauffage',
+            condoFees: 'Frais de Copropriété'
           }
-        },
+        }
       },
       es: {
         mainTitle: 'Calculadora de Calificación Hipotecaria de Montreal',
@@ -2714,31 +2774,61 @@
         calculateButton: 'Calcular Calificación',
         results: {
           qualificationSummary: 'Resumen de Calificación Hipotecaria',
-          maxAmount: 'Monto Máximo de Calificación',
-          mortgageAmount: 'Monto de la Hipoteca',
-          monthlyPayment: 'Pago Mensual',
-          propertyTax: 'Impuesto Predial',
-          schoolTax: 'Impuesto Escolar',
-          cmhcInsurance: 'Prima de Seguro CMHC',
-          downPayment: 'Pago Inicial',
-          stressTest: 'Tasa de Prueba de Estrés',
-          ratios: {
-            gds: 'Ratio GDS',
-            tds: 'Ratio TDS',
-            details: 'Ver Detalles de Ratios'
-          },
-          status: {
+          qualification: {
             approved: 'Aprobado',
             conditions: 'Aprobado con Condiciones',
             denied: 'No Calificado'
           },
+          paymentBreakdown: 'Desglose de Pagos Mensuales',
+          recommendations: 'Recomendaciones',
+          maxAmount: {
+            label: 'Monto Máximo de Calificación',
+            note: 'Basado en sus ingresos y ratios de deuda'
+          },
+          mortgageDetails: {
+            amount: 'Monto de la Hipoteca',
+            term: 'Plazo de la Hipoteca',
+            payment: 'Pago Mensual',
+            frequency: {
+              title: 'Opciones de Pago',
+              monthly: 'Pago Mensual',
+              biweekly: 'Pago Quincenal',
+              weekly: 'Pago Semanal'
+            }
+          },
+          insurance: {
+            cmhc: 'Prima de Seguro CMHC',
+            tax: 'Impuesto sobre Prima de Seguro',
+            total: 'Costo Total del Seguro'
+          },
+          taxes: {
+            property: 'Impuesto Predial',
+            school: 'Impuesto Escolar',
+            monthly: 'Pago Mensual de Impuestos'
+          },
+          ratios: {
+            gds: 'Ratio GDS',
+            tds: 'Ratio TDS',
+            details: 'Ver Detalles de Ratios',
+            stress: 'Tasa de Prueba de Estrés',
+            threshold: 'Umbral'
+          },
           buttons: {
             recalculate: 'Recalcular',
-            saveScenario: 'Guardar Escenario',
-            printResults: 'Imprimir Resultados',
-            compare: 'Comparar Escenarios'
+            save: 'Guardar Escenario',
+            print: 'Imprimir Resultados',
+            compare: 'Comparar Escenarios',
+            clear: 'Borrar Escenarios'
+          },
+          chart: {
+            principal: 'Principal',
+            interest: 'Interés',
+            propertyTax: 'Impuesto Predial',
+            schoolTax: 'Impuesto Escolar',
+            heating: 'Calefacción',
+            condoFees: 'Cuotas de Condominio'
           }
-        },
+        }
       },
       ru: {
         mainTitle: 'Калькулятор оценки ипотеки Монреаля',
@@ -2810,32 +2900,62 @@
         calculateButton: 'Рассчитать квалификацию',
         results: {
           qualificationSummary: 'Результаты Оценки Ипотеки',
-          maxAmount: 'Максимальная Сумма Квалификации',
-          mortgageAmount: 'Сумма Ипотеки',
-          monthlyPayment: 'Ежемесячный Платеж',
-          propertyTax: 'Налог на Недвижимость',
-          schoolTax: 'Школьный Налог',
-          cmhcInsurance: 'Страховая Премия CMHC',
-          downPayment: 'Первоначальный Взнос',
-          stressTest: 'Ставка Стресс-теста',
-          ratios: {
-            gds: 'Коэффициент GDS',
-            tds: 'Коэффициент TDS',
-            details: 'Просмотр Деталей Коэффициентов'
-          },
-          status: {
+          qualification: {
             approved: 'Одобрено',
             conditions: 'Одобрено с Условиями',
             denied: 'Не Квалифицировано'
           },
+          paymentBreakdown: 'Разбивка Ежемесячных Платежей',
+          recommendations: 'Рекомендации',
+          maxAmount: {
+            label: 'Максимальная Сумма Квалификации',
+            note: 'На основе ваших доходов и коэффициентов задолженности'
+          },
+          mortgageDetails: {
+            amount: 'Сумма Ипотеки',
+            term: 'Срок Ипотеки',
+            payment: 'Ежемесячный Платеж',
+            frequency: {
+              title: 'Варианты Оплаты',
+              monthly: 'Ежемесячный Платеж',
+              biweekly: 'Двухнедельный Платеж',
+              weekly: 'Еженедельный Платеж'
+            }
+          },
+          insurance: {
+            cmhc: 'Страховая Премия CMHC',
+            tax: 'Налог на Страховую Премию',
+            total: 'Общая Стоимость Страхования'
+          },
+          taxes: {
+            property: 'Налог на Недвижимость',
+            school: 'Школьный Налог',
+            monthly: 'Ежемесячный Налоговый Платеж'
+          },
+          ratios: {
+            gds: 'Коэффициент GDS',
+            tds: 'Коэффициент TDS',
+            details: 'Просмотр Деталей Коэффициентов',
+            stress: 'Ставка Стресс-теста',
+            threshold: 'Пороговое Значение'
+          },
           buttons: {
             recalculate: 'Пересчитать',
-            saveScenario: 'Сохранить Сценарий',
-            printResults: 'Печать Результатов',
-            compare: 'Сравнить Сценарии'
+            save: 'Сохранить Сценарий',
+            print: 'Печать Результатов',
+            compare: 'Сравнить Сценарии',
+            clear: 'Очистить Сценарии'
+          },
+          chart: {
+            principal: 'Основная Сумма',
+            interest: 'Проценты',
+            propertyTax: 'Налог на Недвижимость',
+            schoolTax: 'Школьный Налог',
+            heating: 'Отопление',
+            condoFees: 'Плата за Кондоминиум'
           }
-        },
-      },
+        }
+      }
     };
 
     // Add BOC translations
@@ -3334,33 +3454,61 @@
       
       // Results
       setTextContent('qualification-summary-title', lang.results.qualificationSummary);
-      setTextContent('max-amount-label', lang.results.maxAmount);
-      setTextContent('mortgage-amount-label', lang.results.mortgageAmount);
-      setTextContent('monthly-payment-label', lang.results.monthlyPayment);
-      setTextContent('property-tax-label', lang.results.propertyTax);
-      setTextContent('school-tax-label', lang.results.schoolTax);
-      setTextContent('cmhc-insurance-label', lang.results.cmhcInsurance);
-      setTextContent('down-payment-label', lang.results.downPayment);
-      setTextContent('stress-test-label', lang.results.stressTest);
+      setTextContent('payment-breakdown-title', lang.results.paymentBreakdown);
+      setTextContent('recommendations-title', lang.results.recommendations);
       
-      // Update ratio labels
+      // Update mortgage details
+      setTextContent('mortgage-amount-label', lang.results.mortgageDetails.amount);
+      setTextContent('monthly-payment-label', lang.results.mortgageDetails.payment);
+      setTextContent('payment-options-title', lang.results.mortgageDetails.frequency.title);
+      setTextContent('monthly-option', lang.results.mortgageDetails.frequency.monthly);
+      setTextContent('biweekly-option', lang.results.mortgageDetails.frequency.biweekly);
+      setTextContent('weekly-option', lang.results.mortgageDetails.frequency.weekly);
+      
+      // Update tax labels
+      setTextContent('property-tax-label', lang.results.taxes.property);
+      setTextContent('school-tax-label', lang.results.taxes.school);
+      setTextContent('monthly-tax-label', lang.results.taxes.monthly);
+      
+      // Update insurance labels
+      setTextContent('cmhc-insurance-label', lang.results.insurance.cmhc);
+      setTextContent('insurance-tax-label', lang.results.insurance.tax);
+      setTextContent('total-insurance-label', lang.results.insurance.total);
+      
+      // Update ratio labels and modal
       setTextContent('gds-ratio-label', lang.results.ratios.gds);
       setTextContent('tds-ratio-label', lang.results.ratios.tds);
       setTextContent('view-ratio-details', lang.results.ratios.details);
+      setTextContent('stress-test-label', lang.results.ratios.stress);
       
       // Update buttons
       if (recalculateButton) recalculateButton.textContent = lang.results.buttons.recalculate;
-      if (saveScenarioButton) saveScenarioButton.textContent = lang.results.buttons.saveScenario;
-      if (printResultsButton) printResultsButton.textContent = lang.results.buttons.printResults;
-      if (clearScenariosButton) clearScenariosButton.textContent = lang.results.buttons.compare;
+      if (saveScenarioButton) saveScenarioButton.textContent = lang.results.buttons.save;
+      if (printResultsButton) printResultsButton.textContent = lang.results.buttons.print;
+      if (clearScenariosButton) clearScenariosButton.textContent = lang.results.buttons.clear;
       
       // Update qualification status if exists
       const qualificationStatus = document.getElementById('qualification-status');
       if (qualificationStatus) {
         const status = qualificationStatus.getAttribute('data-status');
-        if (status === 'approved') qualificationStatus.textContent = lang.results.status.approved;
-        else if (status === 'conditions') qualificationStatus.textContent = lang.results.status.conditions;
-        else if (status === 'denied') qualificationStatus.textContent = lang.results.status.denied;
+        if (status === 'approved') qualificationStatus.textContent = lang.results.qualification.approved;
+        else if (status === 'conditions') qualificationStatus.textContent = lang.results.qualification.conditions;
+        else if (status === 'denied') qualificationStatus.textContent = lang.results.qualification.denied;
+      }
+      
+      // Update max amount section
+      setTextContent('max-amount-label', lang.results.maxAmount.label);
+      setTextContent('max-amount-note', lang.results.maxAmount.note);
+      
+      // Refresh the payment chart with new labels
+      if (paymentChart) {
+        createPaymentChart(
+          paymentChart.data.datasets[0].data[0] + paymentChart.data.datasets[0].data[1],
+          paymentChart.data.datasets[0].data[2],
+          paymentChart.data.datasets[0].data[3],
+          paymentChart.data.datasets[0].data[4],
+          paymentChart.data.datasets[0].data[5]
+        );
       }
 
       // Update BOC meeting details
@@ -3659,14 +3807,15 @@
       const interest = principalAndInterest * 0.4;
       
       // Get translated chart labels based on current language
-      const chartLabels = {
-        en: ['Principal', 'Interest', 'Property Tax', 'School Tax', 'Heating', 'Condo Fees'],
-        fr: ['Principal', 'Intérêt', 'Taxe Foncière', 'Taxe Scolaire', 'Chauffage', 'Frais de Copropriété'],
-        es: ['Capital', 'Interés', 'Impuesto Predial', 'Impuesto Escolar', 'Calefacción', 'Cuotas de Condominio'],
-        ru: ['Основная сумма', 'Проценты', 'Налог на недвижимость', 'Школьный налог', 'Отопление', 'Плата за кондо']
-      };
-      
-      const labels = chartLabels[currentLanguage] || chartLabels.en;
+      const lang = translations[currentLanguage] || translations.en;
+      const labels = [
+        lang.results.chart.principal,
+        lang.results.chart.interest,
+        lang.results.chart.propertyTax,
+        lang.results.chart.schoolTax,
+        lang.results.chart.heating,
+        lang.results.chart.condoFees
+      ];
       
       // Check if dark mode is enabled for better chart visibility
       const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -4057,13 +4206,13 @@
         const lang = translations[currentLanguage] || translations.en;
         
         if (gdsRatio <= gdsThreshold && tdsRatio <= tdsThreshold) {
-          qualificationStatus = lang.results.status.approved;
+          qualificationStatus = lang.results.qualification.approved;
           statusClass = 'approved';
         } else if (gdsRatio <= gdsThreshold + 3 && tdsRatio <= tdsThreshold + 2) {
-          qualificationStatus = lang.results.status.conditions;
+          qualificationStatus = lang.results.qualification.conditions;
           statusClass = 'warning';
         } else {
-          qualificationStatus = lang.results.status.denied;
+          qualificationStatus = lang.results.qualification.denied;
           statusClass = 'denied';
         }
         
@@ -4206,11 +4355,11 @@
           let statusClass = '';
           const lang = translations[currentLanguage] || translations.en;
           
-          if (s.qualificationStatus === lang.results.status.approved) {
+          if (s.qualificationStatus === lang.results.qualification.approved) {
             statusClass = 'color: var(--success-color);';
-          } else if (s.qualificationStatus === lang.results.status.conditions) {
+          } else if (s.qualificationStatus === lang.results.qualification.conditions) {
             statusClass = 'color: var(--warning-color);';
-          } else if (s.qualificationStatus === lang.results.status.denied) {
+          } else if (s.qualificationStatus === lang.results.qualification.denied) {
             statusClass = 'color: var(--danger-color);';
           }
           
