@@ -2232,7 +2232,6 @@
             <canvas id="payment-chart"></canvas>
           </div>
         </div>
-        
         <div class="result-card">
           <h3 id="recommendations-title">Recommendations</h3>
           <div id="recommendations-list"></div>
@@ -2521,48 +2520,33 @@
         mortgageTerm: 'Mortgage Term (Years)',
         amortizationPeriod: 'Amortization Period (Years)',
         calculateButton: 'Calculate Qualification',
-        qualificationSummary: 'Mortgage Qualification Summary',
-        maxQualificationAmount: 'Maximum Qualification Amount:',
-        mortgageAmount: 'Mortgage Amount',
-        cmhcInsurance: 'CMHC Insurance Premium',
-        monthlyPaymentLabel: 'Monthly Payment',
-        gdsRatio: 'GDS Ratio',
-        gdsThreshold: 'GDS Threshold:',
-        tdsRatio: 'TDS Ratio',
-        tdsThreshold: 'TDS Threshold:',
-        stressTestRate: 'Stress Test Rate',
-        viewRatioDetails: 'View GDS/TDS Details',
-        paymentBreakdown: 'Monthly Payment Breakdown',
-        recommendations: 'Recommendations',
-        recalculate: 'Recalculate',
-        saveScenario: 'Save Scenario',
-        printResults: 'Print Results',
-        scenarioComparison: 'Scenario Comparison',
-        clearScenarios: 'Clear Scenarios',
-        approved: 'Approved',
-        approvedWithConditions: 'Approved with Conditions',
-        notQualified: 'Not Qualified',
-        modalTitle: 'Qualification Ratio Details',
-        stressTestInfo: 'Stress Test Information',
-        contractRate: 'Contract Interest Rate:',
-        stressRate: 'Stress Test Rate:',
-        contractPayment: 'Monthly Payment at Contract Rate:',
-        stressPayment: 'Monthly Payment at Stress Test Rate:',
-        gdsRatioTitle: 'GDS Ratio:',
-        gdsExplanation: 'Gross Debt Service ratio is the percentage of your income needed to pay all housing costs.',
-        housingCosts: 'Monthly Housing Costs:',
-        monthlyIncomeLabel: 'Monthly Income:',
-        gdsThresholdLabel: 'GDS Threshold:',
-        gdsCalculation: 'GDS Calculation:',
-        tdsRatioTitle: 'TDS Ratio:',
-        tdsExplanation: 'Total Debt Service ratio includes housing costs plus other debt obligations divided by monthly income.',
-        tdsHousing: 'Housing Costs:',
-        otherDebts: 'Other Debt Payments:',
-        totalObligations: 'Total Monthly Obligations:',
-        tdsIncomeLabel: 'Monthly Income:',
-        tdsThresholdLabel: 'TDS Threshold:',
-        tdsCalculation: 'TDS Calculation:',
-        close: 'Close'
+        results: {
+          qualificationSummary: 'Mortgage Qualification Summary',
+          maxAmount: 'Maximum Qualification Amount',
+          mortgageAmount: 'Mortgage Amount',
+          monthlyPayment: 'Monthly Payment',
+          propertyTax: 'Property Tax',
+          schoolTax: 'School Tax',
+          cmhcInsurance: 'CMHC Insurance Premium',
+          downPayment: 'Down Payment',
+          stressTest: 'Stress Test Rate',
+          ratios: {
+            gds: 'GDS Ratio',
+            tds: 'TDS Ratio',
+            details: 'View Ratio Details'
+          },
+          status: {
+            approved: 'Approved',
+            conditions: 'Approved with Conditions',
+            denied: 'Not Qualified'
+          },
+          buttons: {
+            recalculate: 'Recalculate',
+            saveScenario: 'Save Scenario',
+            printResults: 'Print Results',
+            compare: 'Compare Scenarios'
+          }
+        },
       },
       fr: {
         mainTitle: 'Calculateur de qualification hypothécaire de Montréal',
@@ -2632,48 +2616,33 @@
         mortgageTerm: 'Durée du prêt (Années)',
         amortizationPeriod: 'Période d\'amortissement (Années)',
         calculateButton: 'Calculer la qualification',
-        qualificationSummary: 'Résumé de qualification hypothécaire',
-        maxQualificationAmount: 'Montant maximal de qualification :',
-        mortgageAmount: 'Montant du prêt',
-        cmhcInsurance: 'Prime d\'assurance SCHL',
-        monthlyPaymentLabel: 'Paiement mensuel',
-        gdsRatio: 'Ratio ABD (GDS)',
-        gdsThreshold: 'Seuil ABD :',
-        tdsRatio: 'Ratio ATD (TDS)',
-        tdsThreshold: 'Seuil ATD :',
-        stressTestRate: 'Taux du test de résistance',
-        viewRatioDetails: 'Voir les détails des ratios',
-        paymentBreakdown: 'Répartition des paiements mensuels',
-        recommendations: 'Recommandations',
-        recalculate: 'Recalculer',
-        saveScenario: 'Enregistrer le scénario',
-        printResults: 'Imprimer les résultats',
-        scenarioComparison: 'Comparaison de scénarios',
-        clearScenarios: 'Effacer les scénarios',
-        approved: 'Approuvé',
-        approvedWithConditions: 'Approuvé avec conditions',
-        notQualified: 'Non qualifié',
-        modalTitle: 'Détails des ratios de qualification',
-        stressTestInfo: 'Informations sur le test de résistance',
-        contractRate: 'Taux d\'intérêt contractuel :',
-        stressRate: 'Taux du test de résistance :',
-        contractPayment: 'Paiement mensuel au taux contractuel :',
-        stressPayment: 'Paiement mensuel au taux du test de résistance :',
-        gdsRatioTitle: 'Ratio ABD :',
-        gdsExplanation: 'Le ratio de service de la dette brute est le pourcentage de votre revenu nécessaire pour payer tous les frais de logement.',
-        housingCosts: 'Frais de logement mensuels :',
-        monthlyIncomeLabel: 'Revenu mensuel :',
-        gdsThresholdLabel: 'Seuil ABD :',
-        gdsCalculation: 'Calcul ABD :',
-        tdsRatioTitle: 'Ratio ATD :',
-        tdsExplanation: 'Le ratio du service de la dette totale comprend les frais de logement plus les autres obligations de dette divisés par le revenu mensuel.',
-        tdsHousing: 'Frais de logement :',
-        otherDebts: 'Autres paiements de dettes :',
-        totalObligations: 'Obligations mensuelles totales :',
-        tdsIncomeLabel: 'Revenu mensuel :',
-        tdsThresholdLabel: 'Seuil ATD :',
-        tdsCalculation: 'Calcul ATD :',
-        close: 'Fermer'
+        results: {
+          qualificationSummary: 'Résumé de Qualification Hypothécaire',
+          maxAmount: 'Montant Maximum de Qualification',
+          mortgageAmount: 'Montant du Prêt',
+          monthlyPayment: 'Paiement Mensuel',
+          propertyTax: 'Taxe Foncière',
+          schoolTax: 'Taxe Scolaire',
+          cmhcInsurance: 'Prime d\'Assurance SCHL',
+          downPayment: 'Mise de Fonds',
+          stressTest: 'Taux du Test de Résistance',
+          ratios: {
+            gds: 'Ratio ABD',
+            tds: 'Ratio ATD',
+            details: 'Voir les Détails des Ratios'
+          },
+          status: {
+            approved: 'Approuvé',
+            conditions: 'Approuvé avec Conditions',
+            denied: 'Non Qualifié'
+          },
+          buttons: {
+            recalculate: 'Recalculer',
+            saveScenario: 'Enregistrer le Scénario',
+            printResults: 'Imprimer les Résultats',
+            compare: 'Comparer les Scénarios'
+          }
+        },
       },
       es: {
         mainTitle: 'Calculadora de Calificación Hipotecaria de Montreal',
@@ -2743,48 +2712,33 @@
         mortgageTerm: 'Plazo de la Hipoteca (Años)',
         amortizationPeriod: 'Período de Amortización (Años)',
         calculateButton: 'Calcular Calificación',
-        qualificationSummary: 'Resumen de Calificación Hipotecaria',
-        maxQualificationAmount: 'Monto Máximo de Calificación:',
-        mortgageAmount: 'Monto de la Hipoteca',
-        cmhcInsurance: 'Prima de Seguro CMHC',
-        monthlyPaymentLabel: 'Pago Mensual',
-        gdsRatio: 'Ratio GDS',
-        gdsThreshold: 'Umbral GDS:',
-        tdsRatio: 'Ratio TDS',
-        tdsThreshold: 'Umbral TDS:',
-        stressTestRate: 'Tasa de Prueba de Estrés',
-        viewRatioDetails: 'Ver Detalles de Ratios GDS/TDS',
-        paymentBreakdown: 'Desglose de Pagos Mensuales',
-        recommendations: 'Recomendaciones',
-        recalculate: 'Recalcular',
-        saveScenario: 'Guardar Escenario',
-        printResults: 'Imprimir Resultados',
-        scenarioComparison: 'Comparación de Escenarios',
-        clearScenarios: 'Borrar Escenarios',
-        approved: 'Aprobado',
-        approvedWithConditions: 'Aprobado con Condiciones',
-        notQualified: 'No Calificado',
-        modalTitle: 'Detalles de Ratios de Calificación',
-        stressTestInfo: 'Información de Prueba de Estrés',
-        contractRate: 'Tasa de Interés Contractual:',
-        stressRate: 'Tasa de Prueba de Estrés:',
-        contractPayment: 'Pago Mensual a Tasa Contractual:',
-        stressPayment: 'Pago Mensual a Tasa de Prueba de Estrés:',
-        gdsRatioTitle: 'Ratio GDS:',
-        gdsExplanation: 'El ratio de Servicio de Deuda Bruta es el porcentaje de su ingreso necesario para pagar todos los costos de vivienda.',
-        housingCosts: 'Costos Mensuales de Vivienda:',
-        monthlyIncomeLabel: 'Ingreso Mensual:',
-        gdsThresholdLabel: 'Umbral GDS:',
-        gdsCalculation: 'Cálculo GDS:',
-        tdsRatioTitle: 'Ratio TDS:',
-        tdsExplanation: 'El ratio de Servicio de Deuda Total incluye costos de vivienda más otras obligaciones de deuda dividido por el ingreso mensual.',
-        tdsHousing: 'Costos de Vivienda:',
-        otherDebts: 'Otros Pagos de Deudas:',
-        totalObligations: 'Obligaciones Mensuales Totales:',
-        tdsIncomeLabel: 'Ingreso Mensual:',
-        tdsThresholdLabel: 'Umbral TDS:',
-        tdsCalculation: 'Cálculo TDS:',
-        close: 'Cerrar'
+        results: {
+          qualificationSummary: 'Resumen de Calificación Hipotecaria',
+          maxAmount: 'Monto Máximo de Calificación',
+          mortgageAmount: 'Monto de la Hipoteca',
+          monthlyPayment: 'Pago Mensual',
+          propertyTax: 'Impuesto Predial',
+          schoolTax: 'Impuesto Escolar',
+          cmhcInsurance: 'Prima de Seguro CMHC',
+          downPayment: 'Pago Inicial',
+          stressTest: 'Tasa de Prueba de Estrés',
+          ratios: {
+            gds: 'Ratio GDS',
+            tds: 'Ratio TDS',
+            details: 'Ver Detalles de Ratios'
+          },
+          status: {
+            approved: 'Aprobado',
+            conditions: 'Aprobado con Condiciones',
+            denied: 'No Calificado'
+          },
+          buttons: {
+            recalculate: 'Recalcular',
+            saveScenario: 'Guardar Escenario',
+            printResults: 'Imprimir Resultados',
+            compare: 'Comparar Escenarios'
+          }
+        },
       },
       ru: {
         mainTitle: 'Калькулятор оценки ипотеки Монреаля',
@@ -2838,7 +2792,7 @@
           ownerOccupied2To4Unit: '<strong>Недвижимость с 2-4 единицами (проживание владельца):</strong> Минимум 5% для дуплексов; минимум 10% для триплексов и четырехквартирных домов',
           investment: '<strong>Инвестиционная недвижимость (без проживания владельца):</strong> Требуется минимальный первоначальный взнос 20%',
           fivePlusUnits: '<strong>Недвижимость с 5+ единицами (Коммерческая):</strong> Требуется минимальный первоначальный взнос 25% (только традиционное финансирование)',
-          over1M: '<strong>Недвижимость стоимостью более $1,000,000:</strong> Минимальный первоначальный взнос 20% (не подлежит страхованию CMHC)'
+          over1M: '<strong>Недвижимость высокой стоимости:</strong> Минимальный первоначальный взнос 20% (не подлежит страхованию CMHC)'
         },
         paymentFrequency: 'Частота платежей',
         monthly: 'Ежемесячно',
@@ -2854,49 +2808,34 @@
         mortgageTerm: 'Срок ипотеки (лет)',
         amortizationPeriod: 'Период амортизации (лет)',
         calculateButton: 'Рассчитать квалификацию',
-        qualificationSummary: 'Сводка квалификации по ипотеке',
-        maxQualificationAmount: 'Максимальная сумма квалификации:',
-        mortgageAmount: 'Сумма ипотеки',
-        cmhcInsurance: 'Страховая премия CMHC',
-        monthlyPaymentLabel: 'Ежемесячный платеж',
-        gdsRatio: 'Коэффициент GDS',
-        gdsThreshold: 'Порог GDS:',
-        tdsRatio: 'Коэффициент TDS',
-        tdsThreshold: 'Порог TDS:',
-        stressTestRate: 'Ставка стресс-теста',
-        viewRatioDetails: 'Просмотр деталей коэффициентов GDS/TDS',
-        paymentBreakdown: 'Разбивка ежемесячных платежей',
-        recommendations: 'Рекомендации',
-        recalculate: 'Пересчитать',
-        saveScenario: 'Сохранить сценарий',
-        printResults: 'Печать результатов',
-        scenarioComparison: 'Сравнение сценариев',
-        clearScenarios: 'Очистить сценарии',
-        approved: 'Одобрено',
-        approvedWithConditions: 'Одобрено с условиями',
-        notQualified: 'Не квалифицировано',
-        modalTitle: 'Детали коэффициентов квалификации',
-        stressTestInfo: 'Информация о стресс-тесте',
-        contractRate: 'Контрактная процентная ставка:',
-        stressRate: 'Ставка стресс-теста:',
-        contractPayment: 'Ежемесячный платеж по контрактной ставке:',
-        stressPayment: 'Ежемесячный платеж по ставке стресс-теста:',
-        gdsRatioTitle: 'Коэффициент GDS:',
-        gdsExplanation: 'Коэффициент обслуживания валового долга - это процент вашего дохода, необходимый для оплаты всех жилищных расходов.',
-        housingCosts: 'Ежемесячные жилищные расходы:',
-        monthlyIncomeLabel: 'Ежемесячный доход:',
-        gdsThresholdLabel: 'Порог GDS:',
-        gdsCalculation: 'Расчет GDS:',
-        tdsRatioTitle: 'Коэффициент TDS:',
-        tdsExplanation: 'Коэффициент обслуживания общего долга включает жилищные расходы плюс другие долговые обязательства, деленные на ежемесячный доход.',
-        tdsHousing: 'Жилищные расходы:',
-        otherDebts: 'Другие платежи по долгам:',
-        totalObligations: 'Общие ежемесячные обязательства:',
-        tdsIncomeLabel: 'Ежемесячный доход:',
-        tdsThresholdLabel: 'Порог TDS:',
-        tdsCalculation: 'Расчет TDS:',
-        close: 'Закрыть'
-      }
+        results: {
+          qualificationSummary: 'Результаты Оценки Ипотеки',
+          maxAmount: 'Максимальная Сумма Квалификации',
+          mortgageAmount: 'Сумма Ипотеки',
+          monthlyPayment: 'Ежемесячный Платеж',
+          propertyTax: 'Налог на Недвижимость',
+          schoolTax: 'Школьный Налог',
+          cmhcInsurance: 'Страховая Премия CMHC',
+          downPayment: 'Первоначальный Взнос',
+          stressTest: 'Ставка Стресс-теста',
+          ratios: {
+            gds: 'Коэффициент GDS',
+            tds: 'Коэффициент TDS',
+            details: 'Просмотр Деталей Коэффициентов'
+          },
+          status: {
+            approved: 'Одобрено',
+            conditions: 'Одобрено с Условиями',
+            denied: 'Не Квалифицировано'
+          },
+          buttons: {
+            recalculate: 'Пересчитать',
+            saveScenario: 'Сохранить Сценарий',
+            printResults: 'Печать Результатов',
+            compare: 'Сравнить Сценарии'
+          }
+        },
+      },
     };
 
     // Add BOC translations
@@ -3394,77 +3333,34 @@
       if (calculateButton) calculateButton.textContent = lang.calculateButton;
       
       // Results
-      setTextContent('qualification-summary-title', lang.qualificationSummary);
-      setTextContent('max-amount-label', lang.maxQualificationAmount);
-      setTextContent('mortgage-amount-label', lang.mortgageAmount);
-      setTextContent('cmhc-insurance-label', lang.cmhcInsurance);
-      setTextContent('monthly-payment-label', lang.monthlyPaymentLabel);
-      setTextContent('gds-ratio-label', lang.gdsRatio);
-      setTextContent('tds-ratio-label', lang.tdsRatio);
-      setTextContent('stress-test-rate-label', lang.stressTestRate);
+      setTextContent('qualification-summary-title', lang.results.qualificationSummary);
+      setTextContent('max-amount-label', lang.results.maxAmount);
+      setTextContent('mortgage-amount-label', lang.results.mortgageAmount);
+      setTextContent('monthly-payment-label', lang.results.monthlyPayment);
+      setTextContent('property-tax-label', lang.results.propertyTax);
+      setTextContent('school-tax-label', lang.results.schoolTax);
+      setTextContent('cmhc-insurance-label', lang.results.cmhcInsurance);
+      setTextContent('down-payment-label', lang.results.downPayment);
+      setTextContent('stress-test-label', lang.results.stressTest);
       
-      // Threshold text
-      const gdsThresholdText = document.getElementById('gds-threshold-text');
-      if (gdsThresholdText) gdsThresholdText.textContent = lang.gdsThreshold + ' ';
+      // Update ratio labels
+      setTextContent('gds-ratio-label', lang.results.ratios.gds);
+      setTextContent('tds-ratio-label', lang.results.ratios.tds);
+      setTextContent('view-ratio-details', lang.results.ratios.details);
       
-      const tdsThresholdText = document.getElementById('tds-threshold-text');
-      if (tdsThresholdText) tdsThresholdText.textContent = lang.tdsThreshold + ' ';
+      // Update buttons
+      if (recalculateButton) recalculateButton.textContent = lang.results.buttons.recalculate;
+      if (saveScenarioButton) saveScenarioButton.textContent = lang.results.buttons.saveScenario;
+      if (printResultsButton) printResultsButton.textContent = lang.results.buttons.printResults;
+      if (clearScenariosButton) clearScenariosButton.textContent = lang.results.buttons.compare;
       
-      if (viewRatioDetailsButton) viewRatioDetailsButton.textContent = lang.viewRatioDetails;
-      setTextContent('payment-breakdown-title', lang.paymentBreakdown);
-      setTextContent('recommendations-title', lang.recommendations);
-      
-      // Buttons
-      if (recalculateButton) recalculateButton.textContent = lang.recalculate;
-      if (saveScenarioButton) saveScenarioButton.textContent = lang.saveScenario;
-      if (printResultsButton) printResultsButton.textContent = lang.printResults;
-      if (clearScenariosButton) clearScenariosButton.textContent = lang.clearScenarios;
-      setTextContent('scenario-comparison-title', lang.scenarioComparison);
-      
-      // Modal texts
-      setTextContent('modal-title', lang.modalTitle);
-      setTextContent('stress-test-info-title', lang.stressTestInfo);
-      setTextContent('contract-rate-label', lang.contractRate);
-      setTextContent('stress-rate-label', lang.stressRate);
-      setTextContent('contract-payment-label', lang.contractPayment);
-      setTextContent('stress-payment-label', lang.stressPayment);
-      
-      // GDS section
-      const gdsRatioTitle = document.getElementById('gds-ratio-title');
-      if (gdsRatioTitle && gdsRatioTitle.childNodes[0]) {
-        gdsRatioTitle.childNodes[0].textContent = lang.gdsRatioTitle + ' ';
-      }
-      setTextContent('gds-explanation', lang.gdsExplanation);
-      setTextContent('housing-costs-label', lang.housingCosts);
-      setTextContent('monthly-income-label', lang.monthlyIncomeLabel);
-      setTextContent('gds-threshold-label', lang.gdsThresholdLabel);
-      setTextContent('gds-calculation-label', lang.gdsCalculation);
-      
-      // TDS section
-      const tdsRatioTitle = document.getElementById('tds-ratio-title');
-      if (tdsRatioTitle && tdsRatioTitle.childNodes[0]) {
-        tdsRatioTitle.childNodes[0].textContent = lang.tdsRatioTitle + ' ';
-      }
-      setTextContent('tds-explanation', lang.tdsExplanation);
-      setTextContent('tds-housing-label', lang.tdsHousing);
-      setTextContent('other-debts-label', lang.otherDebts);
-      setTextContent('total-obligations-label', lang.totalObligations);
-      setTextContent('tds-income-label', lang.tdsIncomeLabel);
-      setTextContent('tds-threshold-label', lang.tdsThresholdLabel);
-      setTextContent('tds-calculation-label', lang.tdsCalculation);
-      
-      if (closeModal) closeModal.textContent = lang.close;
-      
-      // Update qualification status if it exists
+      // Update qualification status if exists
       const qualificationStatus = document.getElementById('qualification-status');
-      if (qualificationStatus && qualificationStatus.textContent) {
-        if (qualificationStatus.textContent === 'Approved') {
-          qualificationStatus.textContent = lang.approved;
-        } else if (qualificationStatus.textContent === 'Approved with Conditions') {
-          qualificationStatus.textContent = lang.approvedWithConditions;
-        } else if (qualificationStatus.textContent === 'Not Qualified') {
-          qualificationStatus.textContent = lang.notQualified;
-        }
+      if (qualificationStatus) {
+        const status = qualificationStatus.getAttribute('data-status');
+        if (status === 'approved') qualificationStatus.textContent = lang.results.status.approved;
+        else if (status === 'conditions') qualificationStatus.textContent = lang.results.status.conditions;
+        else if (status === 'denied') qualificationStatus.textContent = lang.results.status.denied;
       }
 
       // Update BOC meeting details
@@ -4161,13 +4057,13 @@
         const lang = translations[currentLanguage] || translations.en;
         
         if (gdsRatio <= gdsThreshold && tdsRatio <= tdsThreshold) {
-          qualificationStatus = lang.approved;
+          qualificationStatus = lang.results.status.approved;
           statusClass = 'approved';
         } else if (gdsRatio <= gdsThreshold + 3 && tdsRatio <= tdsThreshold + 2) {
-          qualificationStatus = lang.approvedWithConditions;
+          qualificationStatus = lang.results.status.conditions;
           statusClass = 'warning';
         } else {
-          qualificationStatus = lang.notQualified;
+          qualificationStatus = lang.results.status.denied;
           statusClass = 'denied';
         }
         
@@ -4310,11 +4206,11 @@
           let statusClass = '';
           const lang = translations[currentLanguage] || translations.en;
           
-          if (s.qualificationStatus === lang.approved) {
+          if (s.qualificationStatus === lang.results.status.approved) {
             statusClass = 'color: var(--success-color);';
-          } else if (s.qualificationStatus === lang.approvedWithConditions) {
+          } else if (s.qualificationStatus === lang.results.status.conditions) {
             statusClass = 'color: var(--warning-color);';
-          } else if (s.qualificationStatus === lang.notQualified) {
+          } else if (s.qualificationStatus === lang.results.status.denied) {
             statusClass = 'color: var(--danger-color);';
           }
           
@@ -4433,7 +4329,7 @@
       // French translations - complete for all months
       fr: {
         january: {
-          quote: "❄️ Acheter à Montréal: Le seul endroit où ton radiateur coûte plus cher que ta hypothèque!",
+          quote: "❄️ Acheter à Montréal: Le seul endroit où ton radiateur coûte plus cher que ton hypothèque!",
           author: "- Le Meilleur Client d'Hydro-Québec",
           tip: "Envisagez des améliorations d'efficacité énergétique pour réduire les coûts de chauffage hivernal."
         },
@@ -5165,3 +5061,7 @@
   </script>
 </body>
 </html>
+
+
+
+
