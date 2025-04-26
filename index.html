@@ -316,6 +316,45 @@
     .language-selector select:focus {
       outline: none;
     }
+
+    .blog-button {
+      position: fixed;
+      left: 10px;
+      top: 70px;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-color);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 0.85rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .blog-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px var(--shadow-color);
+    }
+
+    .blog-icon {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 480px) {
+      .blog-button {
+        top: auto;
+        bottom: 80px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+    }
     
     .container {
       max-width: 1200px;
@@ -1791,6 +1830,13 @@
         <option value="ru">Русский</option>
       </select>
     </div>
+
+    <!-- Add Blog Button -->
+    <a href="blog.html" class="blog-button">
+      <span class="blog-icon">📝</span>
+      <span class="blog-text">Blog</span>
+    </a>
+
     <div class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
       <svg viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="6" fill="currentColor"></circle>
