@@ -3092,6 +3092,12 @@
       // Initialize seasonal campaign
       updateSeasonalCampaign();
       enhanceProgressIndicator();
+
+      // Initialize progress indicator
+      updateProgress(1);
+      
+      // Initialize BOC meeting
+      updateBOCMeeting();
     });
     
     // Initialize DOM references safely
@@ -4740,6 +4746,42 @@
           }
         });
       };
+    }
+
+    // Update BOC meeting details based on current language
+    function updateBOCMeeting() {
+      const bocLang = bocTranslations[currentLanguage] || bocTranslations.en;
+      const meetingDate = document.querySelector('.boc-meeting-date');
+      const consensusTitle = document.querySelector('.boc-meeting-details h4');
+      const increaseLabel = document.querySelector('.consensus-label:nth-of-type(1)');
+      const decreaseLabel = document.querySelector('.consensus-label:nth-of-type(2)');
+      const holdLabel = document.querySelector('.consensus-label:nth-of-type(3)');
+    
+      if (meetingDate) meetingDate.textContent = `${bocLang.nextMeeting} April 16, 2025`;
+      if (consensusTitle) consensusTitle.textContent = bocLang.analystConsensus;
+      if (increaseLabel) increaseLabel.textContent = bocLang.increase;
+      if (decreaseLabel) decreaseLabel.textContent = bocLang.decrease;
+      if (holdLabel) holdLabel.textContent = bocLang.hold;
+    }
+    
+    // Get seasonal campaign based on current month
+    function getSeasonalCampaign(month) {
+      const langCampaigns = seasonalCampaigns[currentLanguage] || seasonalCampaigns;
+      return langCampaigns[month] || seasonalCampaigns[month];
+    }
+    
+    // Update seasonal campaign content
+    function updateSeasonalCampaign() {
+      const currentMonth = new Date().toLocaleString('en-US', { month: 'long' }).toLowerCase();
+      const campaign = getSeasonalCampaign(currentMonth);
+      
+      const titleEl = document.getElementById('campaign-title');
+      const descEl = document.getElementById('campaign-description');
+      
+      if (campaign && titleEl && descEl) {
+        titleEl.textContent = campaign.quote;
+        descEl.textContent = campaign.author;
+      }
     }
   </script>
 </body>
