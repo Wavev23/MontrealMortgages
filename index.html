@@ -3092,12 +3092,6 @@
       // Initialize seasonal campaign
       updateSeasonalCampaign();
       enhanceProgressIndicator();
-
-      // Initialize progress indicator
-      updateProgress(1);
-      
-      // Initialize BOC meeting
-      updateBOCMeeting();
     });
     
     // Initialize DOM references safely
@@ -4681,14 +4675,10 @@
       `;
       document.head.appendChild(styleElement);
     
-      // Get current language or default to English
-      const currentLang = currentLanguage || 'en';
-      const labels = stepLabels[currentLang] || stepLabels.en;
-    
       document.querySelectorAll('.step').forEach((step, index) => {
         const labelDiv = document.createElement('div');
         labelDiv.className = 'step-label';
-        labelDiv.textContent = labels[index];
+        labelDiv.textContent = stepLabels[currentLanguage][index];
         step.appendChild(labelDiv);
       });
     
@@ -4748,29 +4738,44 @@
       };
     }
 
-    // Update BOC meeting details based on current language
+    // Update BOC meeting information based on current language
     function updateBOCMeeting() {
-      const bocLang = bocTranslations[currentLanguage] || bocTranslations.en;
-      const meetingDate = document.querySelector('.boc-meeting-date');
-      const consensusTitle = document.querySelector('.boc-meeting-details h4');
-      const increaseLabel = document.querySelector('.consensus-label:nth-of-type(1)');
-      const decreaseLabel = document.querySelector('.consensus-label:nth-of-type(2)');
-      const holdLabel = document.querySelector('.consensus-label:nth-of-type(3)');
-    
-      if (meetingDate) meetingDate.textContent = `${bocLang.nextMeeting} April 16, 2025`;
-      if (consensusTitle) consensusTitle.textContent = bocLang.analystConsensus;
-      if (increaseLabel) increaseLabel.textContent = bocLang.increase;
-      if (decreaseLabel) decreaseLabel.textContent = bocLang.decrease;
-      if (holdLabel) holdLabel.textContent = bocLang.hold;
+      const lang = bocTranslations[currentLanguage] || bocTranslations.en;
+      
+      // Update BOC meeting texts
+      const nextMeetingEl = document.querySelector('.boc-meeting-date');
+      if (nextMeetingEl) {
+        nextMeetingEl.textContent = `${lang.nextMeeting} April 16, 2025`;
+      }
+
+      // Update consensus labels
+      const consensusLabels = document.querySelectorAll('.consensus-label');
+      consensusLabels.forEach(label => {
+        if (label.textContent.includes('Rate Increase')) {
+          label.textContent = `${lang.increase}`;
+        } else if (label.textContent.includes('Rate Decrease')) {
+          label.textContent = `${lang.decrease}`;
+        } else if (label.textContent.includes('Rate Hold')) {
+          label.textContent = `${lang.hold}`;
+        }
+      });
+
+      // Update probability text
+      const consensusValues = document.querySelectorAll('.consensus-value');
+      consensusValues.forEach(value => {
+        const probability = value.textContent.split('%')[0];
+        value.textContent = `${probability}% ${lang.probability}`;
+      });
     }
-    
+
     // Get seasonal campaign based on current month
     function getSeasonalCampaign(month) {
-      const langCampaigns = seasonalCampaigns[currentLanguage] || seasonalCampaigns;
-      return langCampaigns[month] || seasonalCampaigns[month];
+      const lang = currentLanguage || 'en';
+      const campaigns = seasonalCampaigns[lang] || seasonalCampaigns;
+      return campaigns[month] || campaigns['january']; // Default to January if month not found
     }
-    
-    // Update seasonal campaign content
+
+    // Update seasonal campaign display
     function updateSeasonalCampaign() {
       const currentMonth = new Date().toLocaleString('en-US', { month: 'long' }).toLowerCase();
       const campaign = getSeasonalCampaign(currentMonth);
@@ -4778,10 +4783,32 @@
       const titleEl = document.getElementById('campaign-title');
       const descEl = document.getElementById('campaign-description');
       
-      if (campaign && titleEl && descEl) {
+      if (titleEl && descEl && campaign) {
         titleEl.textContent = campaign.quote;
         descEl.textContent = campaign.author;
       }
+    }
+
+    // Track progress through form steps
+    function updateProgress(step) {
+      const progress = document.querySelector('.progress');
+      if (progress) {
+        const totalSteps = 4;
+        const progressPercentage = ((step - 1) / (totalSteps - 1)) * 100;
+        progress.style.width = `${progressPercentage}%`;
+      }
+
+      // Update aria attributes for accessibility
+      document.querySelectorAll('.step').forEach((stepEl, index) => {
+        const stepNum = index + 1;
+        if (stepNum < step) {
+          stepEl.setAttribute('aria-label', `Step ${stepNum} completed`);
+        } else if (stepNum === step) {
+          stepEl.setAttribute('aria-label', `Step ${stepNum} current`);
+        } else {
+          stepEl.setAttribute('aria-label', `Step ${stepNum} pending`);
+        }
+      });
     }
   </script>
 </body>
