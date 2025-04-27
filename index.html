@@ -348,11 +348,7 @@
 
     @media (max-width: 480px) {
       .blog-button {
-        top: auto;
-        bottom: 80px;
-        left: 10px;
-        padding: 8px 12px;
-        font-size: 0.8rem;
+        display: none;
       }
     }
     
@@ -1898,38 +1894,10 @@
           <div class="step" data-step="2">2</div>
           <div class="step" data-step="3">3</div>
           <div class="step" data-step="4">4</div>
-          <div class="step" data-step="5">5</div>
           <div class="progress-bar"><div class="progress"></div></div>
         </div>
-        <!-- Step 1: Personal Information (Optional) -->
+        <!-- Step 1: Income Information -->
         <div class="step-content active" id="step-1">
-          <p class="optional-notice">All fields in this section are optional. You may skip providing personal details.</p>
-          
-          <div class="form-group">
-            <label for="first-name">First Name (Optional)</label>
-            <div class="input-group">
-              <input type="text" id="first-name" placeholder="Enter your first name if desired">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="last-name">Last Name (Optional)</label>
-            <div class="input-group">
-              <input type="text" id="last-name" placeholder="Enter your last name if desired">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email (Optional)</label>
-            <div class="input-group">
-              <input type="email" id="email" placeholder="Enter your email if desired">
-            </div>
-          </div>
-
-          <div class="button-group">
-            <button class="button-next" id="step-1-next">Next: Income Information</button>
-          </div>
-        </div>
-        <!-- Step 2: Income Information -->
-        <div class="step-content" id="step-2">
           <h2 id="income-info-heading">Income Information</h2>
           <div class="form-group">
             <label for="income-period">Income Period</label>
@@ -1970,13 +1938,11 @@
           </div>
           
           <div class="button-group">
-            <button class="secondary" id="step-2-prev">Previous</button>
-            <button class="button-next" id="step-2-next">Next: Debt Information</button>
+            <button class="button-next" id="step-1-next">Next: Debt Information</button>
           </div>
         </div>
-        <!-- Step 2: Income Information -->
-        <!-- Step 3: Debt Information -->
-        <div class="step-content" id="step-3">
+        <!-- Step 2: Debt Information -->
+        <div class="step-content" id="step-2">
           <h2 id="debt-info-heading">Debt Information</h2>
           <div class="form-group">
             <label for="credit-card-balance">Credit Card Balance</label>
@@ -2016,13 +1982,12 @@
             </div>
           </div>
           <div class="button-group">
-            <button class="secondary" id="step-3-prev">Previous</button>
-            <button class="button-next" id="step-3-next">Next: Property Information</button>
+            <button class="secondary" id="step-2-prev">Previous</button>
+            <button class="button-next" id="step-2-next">Next: Property Information</button>
           </div>
         </div>
-        <!-- Step 3: Debt Information -->
-        <!-- Step 4: Property Information -->
-        <div class="step-content" id="step-4">
+        <!-- Step 3: Property Information -->
+        <div class="step-content" id="step-3">
           <h2 id="property-info-heading">Property Information</h2>
           <div class="form-group">
             <div class="toggle-switch-container">
@@ -2104,13 +2069,13 @@
 
           
           <div class="button-group">
-            <button class="secondary" id="step-4-prev">Previous</button>
-            <button class="button-next" id="step-4-next">Next: Expenses</button>
+            <button class="secondary" id="step-3-prev">Previous</button>
+            <button class="button-next" id="step-3-next">Next: Expenses</button>
           </div>
         </div>
 
-        <!-- Step 5: Monthly Expenses & Mortgage Details -->
-        <div class="step-content" id="step-5">
+        <!-- Step 4: Monthly Expenses & Mortgage Details -->
+        <div class="step-content" id="step-4">
           <h2 id="expenses-mortgage-heading">Monthly Expenses & Mortgage Details</h2>
           
           <div class="form-group">
@@ -2195,7 +2160,7 @@
 
 
           <div class="button-group">
-            <button class="secondary" id="step-5-prev">Previous</button>
+            <button class="secondary" id="step-4-prev">Previous</button>
             <button id="calculate-button">Calculate Qualification</button>
           </div>
         </div>
@@ -3074,7 +3039,7 @@
     let scenarios = [];
 
     // DOM References - initialize as null and get them only after DOM is fully loaded
-    let step1Next, step2Prev, step2Next, step3Prev, step3Next, step4Prev, step4Next, step5Prev;
+    let step1Next, step2Prev, step2Next, step3Prev, step3Next, step4Prev, step4Next;
     let formContainer, resultsContainer, coApplicantSection;
     let propertyPrice, propertyPriceSlider, downPayment, downPaymentSlider, interestRate, interestRateSlider;
     let propertyType, propertyLocation, ownerOccupiedToggle, propertyUseLabel, expectedRentalIncome;
@@ -3139,7 +3104,6 @@
       step3Next = document.getElementById('step-3-next');
       step4Prev = document.getElementById('step-4-prev');
       step4Next = document.getElementById('step-4-next');
-      step5Prev = document.getElementById('step-5-prev');
       
       // Containers
       formContainer = document.getElementById('form-container');
@@ -3197,8 +3161,7 @@
       if (step3Prev) step3Prev.addEventListener('click', function() { goToStep(2); });
       if (step3Next) step3Next.addEventListener('click', function() { goToStep(4); });
       if (step4Prev) step4Prev.addEventListener('click', function() { goToStep(3); });
-      if (step4Next) step4Next.addEventListener('click', function() { goToStep(5); });
-      if (step5Prev) step5Prev.addEventListener('click', function() { goToStep(4); });
+      if (step4Next) step4Next.addEventListener('click', calculateMortgage);
       
       // Mortgage product selection
       const mortgageProduct = document.getElementById('mortgage-product');
@@ -3315,12 +3278,6 @@
         });
       }
       
-      // Calculate button
-      const calculateButton = document.getElementById('calculate-button');
-      if (calculateButton) {
-        calculateButton.addEventListener('click', calculateMortgage);
-      }
-      
       // Results actions
       if (recalculateButton) {
         recalculateButton.addEventListener('click', function() {
@@ -3396,17 +3353,6 @@
       setTextContent('main-title', lang.mainTitle);
       
       // Step 1
-      setTextContent('personal-info-heading', lang.personalInfo);
-      const optionalNotice = document.querySelector('#step-1 .optional-notice');
-      if (optionalNotice) optionalNotice.textContent = lang.optionalFields;
-      
-      setLabelText('first-name', lang.firstName);
-      setLabelText('last-name', lang.lastName);
-      setLabelText('email', lang.email);
-      setLabelText('address', lang.address);
-      if (step1Next) step1Next.textContent = lang.nextIncome;
-      
-      // Step 2
       setTextContent('income-info-heading', lang.incomeInfo);
       setLabelText('income-period', lang.incomePeriod);
       setOptionText('income-period', 'annual', lang.annualIncome);
@@ -3419,24 +3365,23 @@
       setOptionText('co-applicant-income-period', 'annual', lang.annualIncome);
       setOptionText('co-applicant-income-period', 'monthly', lang.monthlyIncome);
       setLabelText('co-applicant-income', lang.coApplicantIncome);
-      if (step2Prev) step2Prev.textContent = lang.previous;
-      if (step2Next) step2Next.textContent = lang.nextDebt;
+      if (step1Next) step1Next.textContent = lang.nextDebt;
       
-      // Step 3
+      // Step 2
       setTextContent('debt-info-heading', lang.debtInfo);
       setLabelText('credit-card-balance', lang.creditCardBalance);
       setLabelText('line-of-credit-balance', lang.lineOfCreditBalance);
       setLabelText('car-loan', lang.carLoanPayment);
       setLabelText('student-loan', lang.studentLoanPayment);
       setLabelText('other-debts', lang.otherDebtPayments);
-      if (step3Prev) step3Prev.textContent = lang.previous;
-      if (step3Next) step3Next.textContent = lang.nextProperty;
+      if (step2Prev) step2Prev.textContent = lang.previous;
+      if (step2Next) step2Next.textContent = lang.nextProperty;
       
       // Update credit card and line of credit payment text
       updateCreditCardPayment();
       updateLineOfCreditPayment();
       
-      // Step 4
+      // Step 3
       setTextContent('property-info-heading', lang.propertyInfo);
       if (propertyUseLabel) {
         propertyUseLabel.textContent = ownerOccupiedToggle && ownerOccupiedToggle.checked ? 
@@ -3475,8 +3420,8 @@
         cmhcRequirementsElement.innerHTML = cmhcHTML;
       }
       
-      if (step4Prev) step4Prev.textContent = lang.previous;
-      if (step4Next) step4Next.textContent = lang.nextExpenses;
+      if (step3Prev) step3Prev.textContent = lang.previous;
+      if (step3Next) step3Next.textContent = lang.nextExpenses;
       
       // Update minimum down payment notice
       updateMinDownPaymentNotice();
@@ -3484,7 +3429,7 @@
       // Update rental income notice
       updateRentalIncomeNotice();
       
-      // Step 5
+      // Step 4
       setTextContent('expenses-mortgage-heading', lang.expensesAndMortgage);
       setLabelText('condo-fees', lang.condoFees);
       setLabelText('municipal-tax', lang.municipalTax);
@@ -3493,7 +3438,7 @@
       setLabelText('interest-rate', lang.interestRate);
       setLabelText('mortgage-term', lang.mortgageTerm);
       setLabelText('amortization-period', lang.amortizationPeriod);
-      if (step5Prev) step5Prev.textContent = lang.previous;
+      if (step4Prev) step4Prev.textContent = lang.previous;
       
       const calculateButton = document.getElementById('calculate-button');
       if (calculateButton) calculateButton.textContent = lang.calculateButton;
@@ -5137,10 +5082,10 @@
     
       // Add descriptive labels under step numbers
       const stepLabels = {
-        en: ['Personal', 'Income', 'Debts', 'Property', 'Details'],
-        fr: ['Personnel', 'Revenu', 'Dettes', 'Propriété', 'Détails'],
-        es: ['Personal', 'Ingresos', 'Deudas', 'Propiedad', 'Detalles'],
-        ru: ['Личные', 'Доход', 'Долги', 'Недвижимость', 'Детали']
+        en: ['Income', 'Debts', 'Property', 'Details'],
+        fr: ['Revenu', 'Dettes', 'Propriété', 'Détails'],
+        es: ['Ingresos', 'Deudas', 'Propiedad', 'Detalles'],
+        ru: ['Доход', 'Долги', 'Недвижимость', 'Детали']
       };
       
       // Add CSS for step labels
@@ -5231,7 +5176,7 @@
       window.updateProgress = function(step) {
         const progress = document.querySelector('.progress');
         if (progress) {
-          const progressPercentage = ((step - 1) / 4) * 100;
+          const progressPercentage = ((step - 1) / 3) * 100;
           progress.style.width = `${progressPercentage}%`;
         }
       };
