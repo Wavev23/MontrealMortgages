@@ -17,15 +17,6 @@
             --border-color: #BDC3C7;
         }
 
-        [data-theme="dark"] {
-            --primary-color: #FFD700;
-            --accent-color: #87CEEB;
-            --background-color: #000000;
-            --text-color: #F0F0F5;
-            --card-bg: #1A1A1A;
-            --border-color: #333333;
-        }
-
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--background-color);
@@ -108,21 +99,5 @@
         <script src="https://static.elfsight.com/platform/platform.js" async></script>
         <div class="elfsight-app-588cfe01-de00-49eb-b4f4-211afb6c8f6d" data-elfsight-app-lazy></div>
     </div>
-
-    <script>
-        // Check for dark mode preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-
-        // Listen for dark mode changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            if (e.matches) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-        });
-    </script>
 </body>
 </html>
