@@ -2161,7 +2161,7 @@
 
           <div class="button-group">
             <button class="secondary" id="step-4-prev">Previous</button>
-            <button id="calculate-button">Calculate Qualification</button>
+            <button id="step-4-next">Calculate Qualification</button>
           </div>
         </div>
       </div>
@@ -4108,185 +4108,148 @@
       
       // Use setTimeout to allow the browser to render the spinner
       setTimeout(function() {
-        // Get form values with null checks
-        const propertyPriceEl = document.getElementById('property-price');
-        const downPaymentEl = document.getElementById('down-payment');
-        const interestRateEl = document.getElementById('interest-rate');
-        const amortizationPeriodEl = document.getElementById('amortization-period');
-        const propertyLocationEl = document.getElementById('property-location');
-        const mortgageProductEl = document.getElementById('mortgage-product');
-        
-        if (!propertyPriceEl || !downPaymentEl || !interestRateEl || 
-            !amortizationPeriodEl || !propertyLocationEl || !mortgageProductEl) {
-          console.error('Missing required form elements');
+        try {
+          // Get form values with null checks
+          const propertyPriceEl = document.getElementById('property-price');
+          const downPaymentEl = document.getElementById('down-payment');
+          const interestRateEl = document.getElementById('interest-rate');
+          const amortizationPeriodEl = document.getElementById('amortization-period');
+          const propertyLocationEl = document.getElementById('property-location');
+          const mortgageProductEl = document.getElementById('mortgage-product');
+          
+          // Validate required fields
+          if (!propertyPriceEl?.value || !downPaymentEl?.value || !interestRateEl?.value) {
+            alert('Please fill in all required fields');
+            spinner.remove();
+            return;
+          }
+          
+          const price = parseFloat(propertyPriceEl.value) || 0;
+          const dp = parseFloat(downPaymentEl.value) || 0;
+          const interestRateValue = parseFloat(interestRateEl.value) || 0;
+          const amortizationPeriod = parseInt(amortizationPeriodEl?.value) || 25;
+          const propertyLocation = propertyLocationEl?.value || 'montreal';
+          const mortgageProduct = mortgageProductEl?.value || 'fixed';
+          
+          // Get expense values
+          const condoFees = parseFloat(document.getElementById('condo-fees')?.value) || 0;
+          const municipalTax = parseFloat(document.getElementById('municipal-tax')?.value) || 0;
+          const schoolTax = parseFloat(document.getElementById('school-tax')?.value) || 0;
+          const heatingFees = parseFloat(document.getElementById('heating-fees')?.value) || 0;
+          
+          // Calculate basic mortgage details
+          const mortgageAmount = price - dp;
+          const ltv = (mortgageAmount / price) * 100;
+          
+          // Calculate monthly expenses
+          const monthlyMunicipalTax = municipalTax / 12;
+          const monthlySchoolTax = schoolTax / 12;
+          
+          // Calculate monthly payment
+          const monthlyPayment = calculateMortgagePayment(mortgageAmount, interestRateValue, amortizationPeriod);
+          
+          // Calculate GDS and TDS ratios
+          const monthlyIncome = calculateTotalMonthlyIncome();
+          const monthlyDebts = calculateTotalMonthlyDebts();
+          const totalHousingCosts = monthlyPayment + condoFees + monthlyMunicipalTax + monthlySchoolTax + heatingFees;
+          
+          const gdsRatio = (totalHousingCosts / monthlyIncome) * 100;
+          const tdsRatio = ((totalHousingCosts + monthlyDebts) / monthlyIncome) * 100;
+          
+          // Show results
+          displayResults({
+            price,
+            downPayment: dp,
+            mortgageAmount,
+            monthlyPayment,
+            gdsRatio,
+            tdsRatio,
+            totalHousingCosts,
+            monthlyDebts,
+            monthlyIncome
+          });
+          
+          // Show results container
+          formContainer.classList.remove('active');
+          resultsContainer.classList.add('active');
+          
+        } catch (error) {
+          console.error('Calculation error:', error);
+          alert('There was an error calculating your mortgage. Please check your inputs.');
+        } finally {
           spinner.remove();
-          return;
         }
-        
-        const price = parseFloat(propertyPriceEl.value) || 0;
-        const dp = parseFloat(downPaymentEl.value) || 0;
-        const interestRateValue = parseFloat(interestRateEl.value) || 0;
-        const amortizationPeriod = parseInt(amortizationPeriodEl.value) || 25;
-        const propertyLocation = propertyLocationEl.value;
-        const mortgageProduct = mortgageProductEl.value;
-        const paymentFrequency = 'monthly'; // Default to monthly payments
-        
-        // Determine if this is a variable rate mortgage
-        const isVariableRate = mortgageProduct === 'variable';
-        
-        // Get expense values with null checks
-        const condoFeesEl = document.getElementById('condo-fees');
-        const municipalTaxEl = document.getElementById('municipal-tax');
-        const schoolTaxEl = document.getElementById('school-tax');
-        const heatingFeesEl = document.getElementById('heating-fees');
-        
-        const condoFees = condoFeesEl ? (parseFloat(condoFeesEl.value) || 0) : 0;
-        const annualMunicipalTax = municipalTaxEl ? (parseFloat(municipalTaxEl.value) || 0) : 0;
-        const annualSchoolTax = schoolTaxEl ? (parseFloat(schoolTaxEl.value) || 0) : 0;
-        const heatingFees = heatingFeesEl ? (parseFloat(heatingFeesEl.value) || 0) : 0;
-        
-        const monthlyMunicipalTax = annualMunicipalTax / 12;
-        const monthlySchoolTax = annualSchoolTax / 12;
-        
-        // Calculate mortgage details
-        const mortgageAmount = price - dp;
-        const ltv = (mortgageAmount / price) * 100;
-        
-        // Check if CMHC insurance is applicable
-        const isInvestmentProperty = ownerOccupiedToggle ? ownerOccupiedToggle.checked : false;
-        const is5PlusProperty = propertyType.value === 'five-plus-units';
-        const isInsurable = !isInvestmentProperty && 
-                          !is5PlusProperty &&
-                          price < 1000000 && 
-                          ltv > 80;
-        
-        // CMHC insurance is required when down payment is less than 20%
-        const cmhcPremium = isInsurable ? calculateCMHCPremium(mortgageAmount, price) : 0;
-        const totalMortgage = mortgageAmount + cmhcPremium;
-        
-        // For stress test, use max of contract rate + 2% or 5.25%
-        const stressTestRate = Math.max(interestRateValue + 2, 5.25);
-        
-        // Use the isVariableRate flag for payment calculations
-        const contractPayment = calculateMortgagePayment(totalMortgage, interestRateValue, amortizationPeriod, paymentFrequency, isVariableRate);
-        const stressTestPayment = calculateMortgagePayment(totalMortgage, stressTestRate, amortizationPeriod, paymentFrequency, isVariableRate);
-        
-        const monthlyIncome = calculateTotalMonthlyIncome();
-        const monthlyDebts = calculateTotalMonthlyDebts();
-        const totalHousingCosts = stressTestPayment + condoFees + monthlyMunicipalTax + monthlySchoolTax + heatingFees;
-        
-        // Calculate ratios
-        const gdsRatio = (totalHousingCosts / monthlyIncome) * 100;
-        const tdsRatio = ((totalHousingCosts + monthlyDebts) / monthlyIncome) * 100;
-        
-        // Different thresholds for insured vs conventional mortgages
-        // For insured (CMHC) mortgages: GDS 39%, TDS 44%
-        // For conventional mortgages: GDS 32%, TDS 40%
-        const gdsThreshold = isInsurable ? 39 : 32;
-        const tdsThreshold = isInsurable ? 44 : 40;
-        
-        // Apply threshold to determine maximum payment
-        const maxGdsPayment = monthlyIncome * (gdsThreshold / 100) - (condoFees + monthlyMunicipalTax + monthlySchoolTax + heatingFees);
-        const maxTdsPayment = monthlyIncome * (tdsThreshold / 100) - (condoFees + monthlyMunicipalTax + monthlySchoolTax + heatingFees + monthlyDebts);
-        const maxAllowedPayment = Math.min(maxGdsPayment, maxTdsPayment);
-        const maxQualifyingAmount = calculateMaxMortgageFromPayment(maxAllowedPayment, stressTestRate, amortizationPeriod);
-        
-        // Determine qualification status
-        let qualificationStatus = '';
-        let statusClass = '';
-        const lang = translations[currentLanguage] || translations.en;
-        
-        if (gdsRatio <= gdsThreshold && tdsRatio <= tdsThreshold) {
-          qualificationStatus = lang.results.qualification.approved;
-          statusClass = 'approved';
-        } else if (gdsRatio <= gdsThreshold + 3 && tdsRatio <= tdsThreshold + 2) {
-          qualificationStatus = lang.results.qualification.conditions;
-          statusClass = 'warning';
-        } else {
-          qualificationStatus = lang.results.qualification.denied;
-          statusClass = 'denied';
-        }
-        
-        // Calculate down payment percentage for display
-        const downPaymentPercentage = (dp / price * 100).toFixed(1);
-        
-        // Update results with null checks
-        setTextContent('max-qualification-amount', "$" + maxQualifyingAmount.toLocaleString());
-        setTextContent('mortgage-amount', "$" + mortgageAmount.toLocaleString());
-        setTextContent('cmhc-insurance', "$" + cmhcPremium.toLocaleString());
-        setTextContent('monthly-payment', "$" + contractPayment.toFixed(2));
-        updatePaymentAmounts(contractPayment);
-        setTextContent('gds-ratio', gdsRatio.toFixed(1) + "%");
-        setTextContent('tds-ratio', tdsRatio.toFixed(1) + "%");
-        setTextContent('gds-threshold-value', gdsThreshold + "%");
-        setTextContent('tds-threshold-value', tdsThreshold + "%");
-        setTextContent('stress-test-rate', stressTestRate.toFixed(2) + "%");
-        
-        const qualificationStatusEl = document.getElementById('qualification-status');
-        if (qualificationStatusEl) {
-          qualificationStatusEl.textContent = qualificationStatus;
-          qualificationStatusEl.className = 'qualification-status ' + statusClass;
-          
-          // Add down payment percentage and CMHC indicator to qualification status
-          if (isInsurable) {
-            const insuranceInfo = document.createElement('div');
-            insuranceInfo.style.marginTop = '10px';
-            insuranceInfo.style.fontSize = '0.9rem';
-            insuranceInfo.textContent = `${downPaymentPercentage}% down payment - CMHC insurance required`;
-            qualificationStatusEl.appendChild(insuranceInfo);
-          } else {
-            const conventionalInfo = document.createElement('div');
-            conventionalInfo.style.marginTop = '10px';
-            conventionalInfo.style.fontSize = '0.9rem';
-            conventionalInfo.textContent = `${downPaymentPercentage}% down payment - Conventional mortgage`;
-            qualificationStatusEl.appendChild(conventionalInfo);
-          }
-          
-          // Add mortgage product type indicator
-          const mortgageTypeInfo = document.createElement('div');
-          mortgageTypeInfo.style.marginTop = '5px';
-          mortgageTypeInfo.style.fontSize = '0.9rem';
-          
-          if (isVariableRate) {
-            mortgageTypeInfo.textContent = "Variable Rate Mortgage - Monthly interest calculation";
-          } else {
-            mortgageTypeInfo.textContent = "Fixed Rate Mortgage - Semi-annual compounding";
-          }
-          qualificationStatusEl.appendChild(mortgageTypeInfo);
-        }
-        
-        // Update modal details with null checks
-        setTextContent('modal-contract-rate', interestRateValue.toFixed(2) + "%");
-        setTextContent('modal-stress-rate', stressTestRate.toFixed(2) + "%");
-        setTextContent('modal-contract-payment', "$" + contractPayment.toFixed(2));
-        setTextContent('modal-stress-payment', "$" + stressTestPayment.toFixed(2));
-        setTextContent('modal-gds-ratio', gdsRatio.toFixed(1) + "%");
-        setTextContent('modal-housing-costs', "$" + totalHousingCosts.toFixed(2));
-        setTextContent('modal-monthly-income', "$" + monthlyIncome.toFixed(2));
-        setTextContent('modal-gds-threshold', gdsThreshold + "%");
-        setTextContent('modal-gds-calculation', "$" + totalHousingCosts.toFixed(2) + " ÷ $" + monthlyIncome.toFixed(2) + " = " + gdsRatio.toFixed(1) + "%");
-        setTextContent('modal-tds-ratio', tdsRatio.toFixed(1) + "%");
-        setTextContent('modal-tds-housing', "$" + totalHousingCosts.toFixed(2));
-        setTextContent('modal-other-debts', "$" + monthlyDebts.toFixed(2));
-        setTextContent('modal-total-obligations', "$" + (totalHousingCosts + monthlyDebts).toFixed(2));
-        setTextContent('modal-tds-income', "$" + monthlyIncome.toFixed(2));
-        setTextContent('modal-tds-threshold', tdsThreshold + "%");
-        setTextContent('modal-tds-calculation', "$" + (totalHousingCosts + monthlyDebts).toFixed(2) + " ÷ $" + monthlyIncome.toFixed(2) + " = " + tdsRatio.toFixed(1) + "%");
-        
-        // Create payment chart
-        createPaymentChart(contractPayment, monthlyMunicipalTax, monthlySchoolTax, heatingFees, condoFees);
-        
-        // Generate recommendations
-        generateRecommendations(price, dp, ltv, mortgageAmount, cmhcPremium, gdsRatio, tdsRatio, gdsThreshold, tdsThreshold, monthlyIncome);
-        
-        // Show results container
-        formContainer.classList.remove('active');
-        resultsContainer.classList.add('active');
-        
-        // Remove spinner
-        spinner.remove();
       }, 500);
     }
+    
+    // Add a new helper function to display results
+    function displayResults(data) {
+      // Update qualification status
+      const qualificationStatus = document.getElementById('qualification-status');
+      let statusClass = '';
+      let statusText = '';
+      
+      if (data.gdsRatio <= 32 && data.tdsRatio <= 40) {
+        statusClass = 'approved';
+        statusText = 'Approved';
+      } else if (data.gdsRatio <= 35 && data.tdsRatio <= 42) {
+        statusClass = 'warning';
+        statusText = 'Approved with Conditions';
+      } else {
+        statusClass = 'denied';
+        statusText = 'Not Qualified';
+      }
+      
+      if (qualificationStatus) {
+        qualificationStatus.className = `qualification-status ${statusClass}`;
+        qualificationStatus.textContent = statusText;
+      }
+      
+      // Update other result elements
+      setTextContent('mortgage-amount', `$${data.mortgageAmount.toLocaleString()}`);
+      setTextContent('monthly-payment', `$${data.monthlyPayment.toFixed(2)}`);
+      setTextContent('gds-ratio', `${data.gdsRatio.toFixed(1)}%`);
+      setTextContent('tds-ratio', `${data.tdsRatio.toFixed(1)}%`);
+      
+      // Update payment breakdown chart
+      createPaymentChart(
+        data.monthlyPayment,
+        data.totalHousingCosts - data.monthlyPayment,
+        data.monthlyDebts,
+        0,
+        0
+      );
+      
+      // Generate recommendations
+      generateRecommendations(
+        data.price,
+        data.downPayment,
+        (data.mortgageAmount / data.price) * 100,
+        data.mortgageAmount,
+        0,
+        data.gdsRatio,
+        data.tdsRatio,
+        32,
+        40,
+        data.monthlyIncome
+      );
+    }
+    
+    // Update the event listener setup
+    document.addEventListener('DOMContentLoaded', function() {
+      // ...existing code...
+      
+      // Add calculate button listener
+      const calculateButton = document.getElementById('step-4-next');
+      if (calculateButton) {
+        calculateButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          calculateMortgage();
+        });
+      }
+      
+      // ...existing code...
+    });
     
     // Save scenario with null checks
     function saveScenario() {
@@ -4656,426 +4619,6 @@
         }
       }
     };
-
-    // Helper function to get the appropriate seasonal campaign based on language
-    function getSeasonalCampaign(month) {
-      // If there's a direct translation for the current language and month, use it
-      if (seasonalCampaigns[currentLanguage] && seasonalCampaigns[currentLanguage][month]) {
-        return seasonalCampaigns[currentLanguage][month];
-      }
-      
-      // Otherwise, use the language translations if available
-      if (currentLanguage !== 'en') {
-        if (seasonalCampaigns[currentLanguage]) {
-          return seasonalCampaigns[currentLanguage][month];
-        }
-      }
-      
-      // Fallback to English
-      return seasonalCampaigns[month];
-    }
-
-    function updateSeasonalCampaign() {
-      const currentMonth = new Date().toLocaleString('en-US', { month: 'long' }).toLowerCase();
-      
-      // Get the appropriate campaign based on current language and month
-      const campaign = getSeasonalCampaign(currentMonth);
-      
-      if (campaign) {
-        document.getElementById('campaign-title').textContent = campaign.quote;
-        document.getElementById('campaign-description').textContent = campaign.author;
-      }
-    }
-
-    // Calculate next BOC meeting date based on typical schedule
-    function getNextBOCMeetingDate() {
-      // Bank of Canada typically meets on Wednesdays, approximately every 6 weeks
-      // This is a simplified algorithm for demo purposes
-      
-      const today = new Date();
-      
-      // Known BOC meeting dates for upcoming meetings (YYYY, MM-1, DD)
-      // Based on typical schedule pattern
-      const meetingDates = [
-        new Date(2023, 0, 25),  // Jan 25, 2023
-        new Date(2023, 2, 8),   // Mar 8, 2023
-        new Date(2023, 3, 12),  // Apr 12, 2023
-        new Date(2023, 5, 7),   // Jun 7, 2023
-        new Date(2023, 6, 26),  // Jul 26, 2023
-        new Date(2023, 8, 6),   // Sep 6, 2023
-        new Date(2023, 9, 25),  // Oct 25, 2023
-        new Date(2023, 11, 6),  // Dec 6, 2023
-        new Date(2024, 0, 24),  // Jan 24, 2024
-        new Date(2024, 2, 6),   // Mar 6, 2024
-        new Date(2024, 3, 10),  // Apr 10, 2024
-        new Date(2024, 5, 5),   // Jun 5, 2024
-        new Date(2024, 6, 24),  // Jul 24, 2024
-        new Date(2024, 8, 4),   // Sep 4,, 2024
-        new Date(2024, 9, 23),  // Oct 23, 2024
-        new Date(2024, 11, 11), // Dec 11, 2024
-        new Date(2025, 0, 22),  // Jan 22, 2025
-        new Date(2025, 2, 5),   // Mar 5, 2025
-        new Date(2025, 3, 16),  // Apr 16, 2025
-        new Date(2025, 5, 4),   // Jun 4, 2025
-        new Date(2025, 6, 23)   // Jul 23, 2025
-      ];
-      
-      // Find the next meeting date
-      let nextMeeting = null;
-      for (let i = 0; i < meetingDates.length; i++) {
-        if (meetingDates[i] > today) {
-          nextMeeting = meetingDates[i];
-          break;
-        }
-      }
-      
-      // If no future meeting found in our list, calculate one (about 6 weeks after last known date)
-      if (!nextMeeting && meetingDates.length > 0) {
-        const lastKnown = meetingDates[meetingDates.length - 1];
-        nextMeeting = new Date(lastKnown);
-        nextMeeting.setDate(nextMeeting.getDate() + 42); // Add approximately 6 weeks
-      }
-      
-      // Fallback if no dates available
-      if (!nextMeeting) {
-        nextMeeting = new Date();
-        // Move to next Wednesday if not already
-        nextMeeting.setDate(nextMeeting.getDate() + (3 - nextMeeting.getDay() + 7) % 7);
-        // Add 6 weeks
-        nextMeeting.setDate(nextMeeting.getDate() + 42);
-      }
-      
-      return nextMeeting;
-    }
-    
-    // Format date nicely based on locale
-    function formatMeetingDate(date, lang) {
-      let options = { year: 'numeric', month: 'long', day: 'numeric' };
-      
-      if (lang === 'fr') {
-        return date.toLocaleDateString('fr-CA', options);
-      } else if (lang === 'es') {
-        return date.toLocaleDateString('es-ES', options);
-      } else if (lang === 'ru') {
-        return date.toLocaleDateString('ru-RU', options);
-      } else {
-        return date.toLocaleDateString('en-CA', options);
-      }
-    }
-    
-    // Update BOC meeting details
-    function updateBOCMeeting() {
-      const bocMeeting = document.querySelector('.boc-meeting');
-      if (!bocMeeting) return;
-      
-      const lang = currentLanguage;
-      const nextMeetingDate = getNextBOCMeetingDate();
-      const formattedDate = formatMeetingDate(nextMeetingDate, lang);
-      
-      // Calculate days until next meeting
-      const today = new Date();
-      const diffTime = Math.abs(nextMeetingDate - today);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      // Dynamic consensus data based on days until meeting
-      // As we get closer to the meeting, consensus should become clearer
-      let consensus = {};
-      
-      if (diffDays < 7) {
-        // Last week before meeting - more clarity
-        consensus = {
-          increase: 10,
-          decrease: 15,
-          hold: 75
-        };
-      } else if (diffDays < 21) {
-        // 1-3 weeks before meeting
-        consensus = {
-          increase: 20,
-          decrease: 15,
-          hold: 65
-        };
-      } else {
-        // Far from meeting - more uncertainty
-        consensus = {
-          increase: 25,
-          decrease: 15,
-          hold: 60
-        };
-      }
-      
-      // Update HTML
-      bocMeeting.innerHTML = `
-        <span class="boc-meeting-icon">📅</span>
-        <span class="boc-meeting-date">${bocTranslations[lang].nextMeeting} ${formattedDate}</span>
-        <div class="boc-meeting-details">
-          <h4>${bocTranslations[lang].analystConsensus}</h4>
-          <div class="consensus-item">
-            <span class="consensus-label">${bocTranslations[lang].increase}</span>
-            <span class="consensus-value">${consensus.increase}% ${bocTranslations[lang].probability}</span>
-          </div>
-          <div class="consensus-item">
-            <span class="consensus-label">${bocTranslations[lang].decrease}</span>
-            <span class="consensus-value">${consensus.decrease}% ${bocTranslations[lang].probability}</span>
-          </div>
-          <div class="consensus-item">
-            <span class="consensus-label">${bocTranslations[lang].hold}</span>
-            <span class="consensus-value">${consensus.hold}% ${bocTranslations[lang].probability}</span>
-          </div>
-          <div class="boc-sources">
-            <div class="boc-source-item">
-              <span class="boc-source-icon">🔗</span>
-              <a href="https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" class="boc-source-link" target="_blank">Bank of Canada Policy Rate</a>
-            </div>
-            <div class="boc-source-item">
-              <span class="boc-source-icon">📊</span>
-              <a href="https://www.bankofcanada.ca/rates/interest-rates/canadian-interest-rates/" class="boc-source-link" target="_blank">Canadian Interest Rates</a>
-            </div>
-            <div class="boc-source-item">
-              <span class="boc-source-icon">📈</span>
-              <a href="https://www.bankofcanada.ca/markets/market-operations-liquidity-provision/" class="boc-source-link" target="_blank">Market Operations</a>
-            </div>
-            <div class="boc-source-item">
-              <span class="boc-source-icon">📅</span>
-              <a href="https://www.bankofcanada.ca/press/upcoming-events/" class="boc-source-link" target="_blank">Upcoming BOC Events</a>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-    
-    // Add a function to update the example notes and placeholders based on city selection
-    function updateTaxExamples(city) {
-      let municipalTaxExample = document.getElementById("municipal-tax-example");
-      let schoolTaxExample = document.getElementById("school-tax-example");
-      let municipalTaxInput = document.getElementById("municipal-tax");
-      let schoolTaxInput = document.getElementById("school-tax");
-
-      switch (city) {
-        case "montreal":
-          municipalTaxExample.textContent = "Example: For Montreal, typical annual municipal tax is $4,000.";
-          schoolTaxExample.textContent = "Example: For Montreal, typical annual school tax is $2,000.";
-          municipalTaxInput.placeholder = "e.g., 4000";
-          schoolTaxInput.placeholder = "e.g., 2000";
-          break;
-        case "vancouver":
-          municipalTaxExample.textContent = "Example: For Vancouver, typical annual municipal tax is $5,000.";
-          schoolTaxExample.textContent = "Example: For Vancouver, typical annual school tax is $700.";
-          municipalTaxInput.placeholder = "e.g., 5000";
-          schoolTaxInput.placeholder = "e.g., 700";
-          break;
-        case "toronto":
-          municipalTaxExample.textContent = "Example: For Toronto, typical annual municipal tax is $3,800.";
-          schoolTaxExample.textContent = "Example: For Toronto, typical annual school tax is $1,100.";
-          municipalTaxInput.placeholder = "e.g., 3800";
-          schoolTaxInput.placeholder = "e.g., 1100";
-          break;
-        case "ottawa":
-          municipalTaxExample.textContent = "Example: For Ottawa, typical annual municipal tax is $3,500.";
-          schoolTaxExample.textContent = "Example: For Ottawa, typical annual school tax is $900.";
-          municipalTaxInput.placeholder = "e.g., 3500";
-          schoolTaxInput.placeholder = "e.g., 900";
-          break;
-        case "calgary":
-          municipalTaxExample.textContent = "Example: For Calgary, typical annual municipal tax is $3,200.";
-          schoolTaxExample.textContent = "Example: For Calgary, typical annual school tax is $800.";
-          municipalTaxInput.placeholder = "e.g., 3200";
-          schoolTaxInput.placeholder = "e.g., 800";
-          break;
-        case "edmonton":
-          municipalTaxExample.textContent = "Example: For Edmonton, typical annual municipal tax is $3,000.";
-          schoolTaxExample.textContent = "Example: For Edmonton, typical annual school tax is $700.";
-          municipalTaxInput.placeholder = "e.g., 3000";
-          schoolTaxInput.placeholder = "e.g., 700";
-          break;
-        case "regina":
-          municipalTaxExample.textContent = "Example: For Regina, typical annual municipal tax is $2,800.";
-          schoolTaxExample.textContent = "Example: For Regina, typical annual school tax is $600.";
-          municipalTaxInput.placeholder = "e.g., 2800";
-          schoolTaxInput.placeholder = "e.g., 600";
-          break;
-        default:
-          municipalTaxExample.textContent = "Example: For the selected city, typical annual municipal tax is [Amount].";
-          schoolTaxExample.textContent = "Example: For the selected city, typical annual school tax is [Amount].";
-          municipalTaxInput.placeholder = "Enter annual amount";
-          schoolTaxInput.placeholder = "Enter annual amount";
-          break;
-      }
-    }
-
-    function downloadResults() {
-      // ...existing code...
-    }
-
-    addExitIntentPopup();
-
-    // Global variable to track exit popup state
-    let exitPopupShown = false;
-    
-    function addExitIntentPopup() {
-      const popupHTML = `
-        <div id="exit-popup" class="exit-popup">
-          <div class="exit-popup-content">
-            <button class="close-popup">×</button>
-            <h3>Before You Go!</h3>
-            <p>Get our exclusive Montreal Mortgage Market Report with insights on:</p>
-            <ul>
-              <li>Current interest rate trends and forecasts</li>
-              <li>Neighborhood price analyses</li>
-              <li>First-time buyer incentive programs</li>
-            </ul>
-            <form id="exit-form">
-              <input type="email" placeholder="Your Email Address" required>
-              <button type="submit">Send Me The Report</button>
-            </form>
-            <div class="popup-footer">
-              <p class="disclaimer">We respect your privacy. Unsubscribe anytime.</p>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      // Add CSS for exit popup
-      const popupStyle = document.createElement('style');
-      popupStyle.textContent = `
-        .exit-popup {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0,0,0,0.7);
-          z-index: 1000;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .exit-popup.active {
-          display: flex;
-          animation: fadeIn 0.3s ease;
-        }
-        
-        .exit-popup-content {
-          background: var(--card-bg);
-          border-radius: 12px;
-          max-width: 500px;
-          width: 90%;
-          padding: 2rem;
-          position: relative;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-          border: 1px solid var(--accent-color);
-        }
-        
-        .close-popup {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background: none;
-          border: none;
-          font-size: 1.5rem;
-          cursor: pointer;
-          color: var(--accent-color);
-          padding: 0;
-          box-shadow: none;
-        }
-        
-        .exit-popup h3 {
-          color: var(--primary-color);
-          margin-bottom: 1rem;
-        }
-        
-        .exit-popup ul {
-          margin: 1rem 0 1.5rem 1.5rem;
-        }
-        
-        .exit-popup li {
-          margin-bottom: 0.5rem;
-        }
-        
-        #exit-form {
-          margin: 1.5rem 0;
-        }
-        
-        #exit-form input {
-          width: 100%;
-          padding: 12px;
-          margin-bottom: 1rem;
-          border: 1px solid var(--border-color);
-          border-radius: 6px;
-          font-size: 1rem;
-        }
-        
-        #exit-form button {
-          width: 100%;
-        }
-        
-        .disclaimer {
-          font-size: 0.8rem;
-          opacity: 0.8;
-          text-align: center;
-          margin-top: 1rem;
-        }
-        
-        .success-message {
-          color: var(--success-color);
-          text-align: center;
-          padding: 1rem;
-          font-weight: 500;
-        }
-      `;
-      document.head.appendChild(popupStyle);
-    
-      document.body.insertAdjacentHTML('beforeend', popupHTML);
-    
-      // Set up exit intent detection
-      let exitShown = false;
-    
-      document.addEventListener('mouseleave', function(e) {
-        if (e.clientY < 0 && !exitShown && !exitPopupShown) {
-          const exitPopup = document.getElementById('exit-popup');
-          if (exitPopup) {
-            exitPopup.classList.add('active');
-            exitShown = true;
-          }
-        }
-      });
-    
-      // Close popup
-      const closeButton = document.querySelector('.close-popup');
-      if (closeButton) {
-        closeButton.addEventListener('click', function() {
-          const exitPopup = document.getElementById('exit-popup');
-          if (exitPopup) {
-            exitPopup.classList.remove('active');
-            exitPopupShown = true;
-          }
-        });
-      }
-    
-      // Handle form submission
-      const exitForm = document.getElementById('exit-form');
-      if (exitForm) {
-        exitForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const email = this.querySelector('input[type="email"]').value;
-      
-          // Update UI
-          this.innerHTML = '<p class="success-message">Thanks! Check your inbox shortly.</p>';
-          
-          // Mark as shown
-          exitPopupShown = true;
-      
-          // Close after delay
-          setTimeout(() => {
-            const exitPopup = document.getElementById('exit-popup');
-            if (exitPopup) {
-              exitPopup.classList.remove('active');
-            }
-          }, 3000);
-        });
-      }
-    }
 
     function enhanceProgressIndicator() {
       const stepIndicator = document.querySelector('.step-indicator');
