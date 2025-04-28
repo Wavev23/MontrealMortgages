@@ -3,1025 +3,294 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Montreal Mortgage Solutions | Expert Mortgage Advisors</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Montreal Mortgage Experts - Best Rates & Advice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #E67E22; /* Darker orange from calculator */
-      --primary-light: #F39C12; /* Orange from calculator */
-      --primary-dark: #D35400; /* Deep orange from calculator */
-      --accent-color: #2980B9; /* Deep blue from calculator */
-      --accent-light: #3498DB; /* Blue from calculator */
-      --accent-dark: #2C3E50; /* Navy from calculator */
-      --background-color: #F8F9FA; /* Light gray background from calculator */
-      --text-color: #2C3E50; /* Dark blue-gray text from calculator */
-      --card-bg: #FFFFFF;
-      --card-bg-rgb: 255, 255, 255;
-      --border-color: #BDC3C7;
-      --shadow-color: rgba(0, 0, 0, 0.15);
-      --shadow-color-rgb: 0, 0, 0;
-      --accent-color-rgb: 41, 128, 185;
-      --success-color: #4caf50;
-      --warning-color: #ff9800;
-      --danger-color: #f44336;
-      --info-color: #2196F3;
-      --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-      --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--accent-light));
-      --gradient-card: linear-gradient(170deg, var(--card-bg), rgba(255,255,255,0.03));
+      --background-color: #F8FAFC;
+      --text-color: #1F2937;
+      --primary-color: #FFD700;
+      --accent-color: #87CEEB;
     }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-    
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--background-color);
       color: var(--text-color);
       line-height: 1.6;
       min-height: 100vh;
+      padding: 0 20px;
       position: relative;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 10% 20%, var(--primary-color), transparent 250px),
-        radial-gradient(circle at 90% 80%, var(--accent-color), transparent 250px);
+        radial-gradient(circle at 10% 20%, var(--primary-color), transparent 400px),
+        radial-gradient(circle at 90% 80%, var(--accent-color), transparent 400px);
       background-attachment: fixed;
     }
-    
     h1, h2, h3, h4, h5 {
       font-family: 'Playfair Display', serif;
       color: var(--text-color);
       margin-bottom: 1rem;
     }
-    
-    h1 {
-      font-size: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1516321318428-287d8a659729?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
       position: relative;
-      display: inline-block;
-      color: var(--primary-color);
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
-    
-    h1::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
-    }
-    
-    h2 {
-      font-size: 2rem;
-      color: var(--accent-dark);
-      margin-bottom: 1.5rem;
-    }
-    
-    p {
-      margin-bottom: 1rem;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    /* Header Styles */
-    .header {
-      background-color: var(--card-bg);
-      box-shadow: 0 2px 10px var(--shadow-color);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-    
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-    }
-    
-    .logo {
+      min-height: 80vh;
       display: flex;
       align-items: center;
-      text-decoration: none;
+      justify-content: center;
     }
-    
-    .logo-img {
-      height: 50px;
-      margin-right: 10px;
-    }
-    
-    .logo-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent-dark);
-    }
-    
-    .nav-menu {
-      display: flex;
-      list-style: none;
-    }
-    
-    .nav-item {
-      margin-left: 1.5rem;
-    }
-    
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
-      padding: 0.5rem;
-      position: relative;
-      transition: color 0.3s;
-    }
-    
-    .nav-link:hover {
-      color: var(--primary-color);
-    }
-    
-    .nav-link::after {
+    .hero::before {
       content: '';
       position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background: var(--primary-color);
-      transition: width 0.3s;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
     }
-    
-    .nav-link:hover::after {
-      width: 100%;
-    }
-    
-    .calculator-button {
-      background: var(--gradient-primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    
-    .calculator-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    }
-    
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--accent-dark);
-    }
-    
-    /* Hero Section */
-    .hero {
-      padding: 8rem 0 4rem;
-      text-align: center;
-      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      position: relative;
-      overflow: hidden;
-    }
-    
     .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
+      animation: fadeIn 1s ease-in;
     }
-    
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      color: var(--accent-dark);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      color: var(--text-color);
-    }
-    
-    .cta-button {
-      background: var(--gradient-primary);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      font-size: 1.1rem;
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: #1F2937;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: inline-block;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-    
-    /* Services Section */
-    .services {
-      padding: 5rem 0;
-      background-color: var(--background-color);
-    }
-    
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    
-    .service-card {
-      background: var(--gradient-card);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px var(--shadow-color);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .service-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--primary-color);
-    }
-    
-    .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-    }
-    
-    .service-icon {
-      font-size: 2.5rem;
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-    }
-    
-    .service-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-    }
-    
-    /* About Section */
-    .about {
-      padding: 5rem 0;
-      background-color: var(--card-bg);
-    }
-    
-    .about-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 3rem;
-    }
-    
-    .about-text {
-      flex: 1;
-    }
-    
-    .about-image {
-      flex: 1;
-      position: relative;
-    }
-    
-    .about-img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px var(--shadow-color);
-    }
-    
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    
-    .stat-item {
-      text-align: center;
-      padding: 1rem;
-      background: rgba(var(--accent-color-rgb), 0.1);
-      border-radius: 8px;
-    }
-    
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--accent-dark);
-    }
-    
-    /* Testimonials Section */
-    .testimonials {
-      padding: 5rem 0;
-      background-color: var(--background-color);
-    }
-    
-    .testimonials-slider {
-      margin-top: 2rem;
-      overflow: hidden;
-    }
-    
-    .testimonial-card {
-      background: var(--gradient-card);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px var(--shadow-color);
-      margin: 1rem;
-    }
-    
-    .testimonial-content {
-      font-style: italic;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding: 0 1rem;
-    }
-    
-    .testimonial-content::before,
-    .testimonial-content::after {
-      font-family: Georgia, serif;
-      font-size: 3rem;
-      position: absolute;
-      color: var(--primary-light);
-      opacity: 0.3;
-    }
-    
-    .testimonial-content::before {
-      content: '\201C';
-      top: -1rem;
-      left: -1rem;
-    }
-    
-    .testimonial-content::after {
-      content: '\201D';
-      bottom: -2rem;
-      right: -1rem;
-    }
-    
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-    }
-    
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 1rem;
-    }
-    
-    .author-info h4 {
-      margin-bottom: 0.2rem;
-      color: var(--accent-dark);
-      font-size: 1.1rem;
-    }
-    
-    .author-info p {
-      font-size: 0.9rem;
-      color: var(--accent-color);
-    }
-    
-    /* Calculator Section */
-    .calculator-section {
-      padding: 5rem 0;
-      background-color: var(--card-bg);
-      text-align: center;
-    }
-    
-    .calculator-preview {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--gradient-card);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px var(--shadow-color);
-    }
-    
-    .calculator-image {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    /* Contact Section */
-    .contact {
-      padding: 5rem 0;
-      background-color: var(--background-color);
-    }
-    
-    .contact-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-    }
-    
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .contact-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-    
-    .contact-icon {
-      font-size: 1.5rem;
-      color: var(--accent-color);
-      margin-right: 1rem;
-      width: 50px;
-      height: 50px;
-      background: rgba(var(--accent-color-rgb), 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .contact-form {
-      background: var(--gradient-card);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px var(--shadow-color);
-    }
-    
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--accent-dark);
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.25);
-    }
-    
-    .form-control-textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-    
-    .submit-button {
-      background: var(--gradient-primary);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: inline-block;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .submit-button:hover {
+    .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    
-    /* Footer */
-    .footer {
-      background-color: var(--accent-dark);
-      color: white;
-      padding: 4rem 0 2rem;
+    .btn-secondary {
+      border: 2px solid var(--accent-color);
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      transition: background-color 0.2s, color 0.2s;
     }
-    
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+    .btn-secondary:hover {
+      background-color: var(--accent-color);
+      color: #1F2937;
     }
-    
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1rem;
+    .accordion-toggle:checked + .accordion-label .accordion-icon {
+      transform: rotate(180deg);
     }
-    
-    .footer-text {
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 1.5rem;
+    .accordion-label {
+      transition: background-color 0.2s;
     }
-    
-    .footer-social {
-      display: flex;
-      gap: 1rem;
+    .accordion-label:hover {
+      background-color: rgba(0, 0, 0, 0.05);
     }
-    
-    .social-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s;
+    section {
+      animation: fadeIn 0.8s ease-in;
     }
-    
-    .social-icon:hover {
-      background: var(--primary-color);
-      transform: translateY(-3px);
-    }
-    
-    .footer-title {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-      color: white;
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-link {
-      margin-bottom: 0.8rem;
-    }
-    
-    .footer-link a {
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
-    .footer-link a:hover {
-      color: var(--primary-light);
-    }
-    
-    .footer-bottom {
-      text-align: center;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
-    }
-    
-    /* Responsive Styles */
-    @media (max-width: 991px) {
-      .about-content {
-        flex-direction: column;
+    @media (max-width: 640px) {
+      body {
+        background-attachment: scroll;
       }
-      
-      .about-image {
-        order: -1;
+      .hero {
+        min-height: 60vh;
       }
-      
-      .about-img {
-        max-width: 500px;
-        margin: 0 auto;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .nav-menu {
-        position: fixed;
-        top: 80px;
-        left: -100%;
-        background: var(--card-bg);
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        z-index: 999;
-      }
-      
-      .nav-menu.active {
-        left: 0;
-      }
-      
-      .nav-item {
-        margin: 1.5rem 0;
-      }
-      
-      .mobile-menu-toggle {
-        display: block;
-      }
-      
-      .hero h1 {
+      .hero-content h1 {
         font-size: 2.5rem;
       }
-      
-      .hero p {
-        font-size: 1rem;
+      .hero-content p {
+        font-size: 1.25rem;
       }
-    }
-    
-    @media (max-width: 576px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      .cta-button {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-      }
-      
-      .service-card {
-        padding: 1.5rem;
-      }
-      
-      .stat-number {
-        font-size: 1.5rem;
+      .hero-content .flex {
+        flex-direction: column;
+        gap: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="nav-container">
-        <a href="#" class="logo">
-          <img src="https://via.placeholder.com/50x50.png?text=MS" alt="Montreal Mortgage Solutions Logo" class="logo-img">
-          <span class="logo-text">Montreal Mortgage Solutions</span>
-        </a>
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-          ☰
-        </button>
-        <ul class="nav-menu" id="nav-menu">
-          <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
-          <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
-          <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
-          <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-          <li class="nav-item">
-            <a href="calculator.html" class="calculator-button">Mortgage Calculator</a>
-          </li>
-        </ul>
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content relative text-center text-white px-4 z-10">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 tracking-tight">Your Dream Home Starts Here</h1>
+      <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">Expert Mortgage Advice & Competitive Rates in Montreal</p>
+      <div class="flex justify-center gap-4">
+        <a href="calculator.html" class="btn-primary">Pre-Qualification</a>
+        <a href="https://calendly.com/representant" class="btn-secondary">Book a Meeting</a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Make Your Home Ownership Dreams a Reality</h1>
-        <p>Expert mortgage advice tailored to your unique financial needs. We help you find the perfect mortgage solution for your dream home.</p>
-        <a href="calculator.html" class="cta-button">Try Our Mortgage Calculator</a>
-      </div>
+  <!-- Tips & Advice Section -->
+  <section class="container mx-auto px-4 py-20">
+    <h2 class="text-center text-sm uppercase tracking-widest text-gray-500 mb-2">Market Insights</h2>
+    <h3 class="text-center text-4xl md:text-5xl font-bold mb-12">Expert Mortgage Tips</h3>
+    <!-- Elfsight Blog | Untitled Blog -->
+    <div class="container mx-auto px-4 py-12">
+      <script src="https://static.elfsight.com/platform/platform.js" async></script>
+      <div class="elfsight-app-588cfe01-de00-49eb-b4f4-211afb6c8f6d" data-elfsight-app-lazy></div>
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="section-header">
-        <h2>Our Mortgage Services</h2>
-        <p>Comprehensive mortgage solutions to meet your financial goals</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3 class="service-title">First-Time Home Buyers</h3>
-          <p>We guide first-time buyers through every step of the mortgage process, helping you understand your options and find the best rates.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🔄</div>
-          <h3 class="service-title">Mortgage Refinancing</h3>
-          <p>Refinance your existing mortgage to secure a better interest rate, consolidate debt, or access equity in your home.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🏢</div>
-          <h3 class="service-title">Investment Properties</h3>
-          <p>Specialized mortgage solutions for investment properties, multi-family units, and commercial real estate investments.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📊</div>
-          <h3 class="service-title">Mortgage Renewal</h3>
-          <p>When your term is up, we help you renew with the best possible terms and rates based on your current financial situation.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🛡️</div>
-          <h3 class="service-title">Mortgage Insurance</h3>
-          <p>Protect your investment and family with the right mortgage insurance options tailored to your needs.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">💼</div>
-          <h3 class="service-title">Self-Employed Solutions</h3>
-          <p>Specialized mortgage options for self-employed individuals and business owners with flexible income documentation.</p>
+  <!-- Mortgage Calculator Section -->
+  <section id="calculator" class="container mx-auto px-4 py-20 bg-gray-50">
+    <h2 class="text-center text-sm uppercase tracking-widest text-gray-500 mb-2">Plan Your Future</h2>
+    <h3 class="text-center text-4xl md:text-5xl font-bold mb-12">Mortgage Calculator</h3>
+    <div class="text-center">
+      <p class="text-center text-gray-600 mb-6">Start your mortgage planning with our easy-to-use calculator.</p>
+      <a href="calculator.html" class="btn-primary">Calculate Payments</a>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="relative bg-cover bg-center py-20" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')">
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <div class="relative container mx-auto px-4 text-center text-white">
+      <p class="text-2xl md:text-3xl font-light italic mb-6 max-w-3xl mx-auto">"Their expertise made our home-buying process seamless. They found us the perfect mortgage in Montreal’s competitive market."</p>
+      <div class="flex justify-center items-center gap-4">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Client, Sarah Johnson" class="w-12 h-12 rounded-full">
+        <div>
+          <p class="font-semibold">Sarah Johnson</p>
+          <p class="text-sm text-gray-200">Homebuyer</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="section-header">
-        <h2>About Montreal Mortgage Solutions</h2>
-        <p>Your trusted partner in home financing</p>
-      </div>
-      <div class="about-content">
-        <div class="about-text">
-          <p>Founded in 2010, Montreal Mortgage Solutions has been helping clients across Quebec achieve their home ownership dreams with expert guidance and personalized service.</p>
-          <p>Our team of licensed mortgage brokers has access to over 30 lenders, allowing us to find you the best mortgage rates and terms that fit your unique financial situation.</p>
-          <p>We pride ourselves on transparent, client-focused service that puts your needs first. Whether you're a first-time buyer, looking to refinance, or investing in property, we're here to simplify the process.</p>
-          <div class="stats-container">
-            <div class="stat-item">
-              <div class="stat-number">2,500+</div>
-              <div class="stat-label">Happy Clients</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">$750M+</div>
-              <div class="stat-label">Mortgages Funded</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">30+</div>
-              <div class="stat-label">Lending Partners</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">12+</div>
-              <div class="stat-label">Years Experience</div>
-            </div>
-          </div>
-        </div>
-        <div class="about-image">
-          <img src="https://via.placeholder.com/600x400.png?text=Our+Team" alt="Our Mortgage Team" class="about-img">
+  <!-- FAQ Section -->
+  <section class="container mx-auto px-4 py-20">
+    <h2 class="text-center text-4xl md:text-5xl font-bold mb-12">Frequently Asked Questions</h2>
+    <div class="space-y-4 max-w-3xl mx-auto">
+      <div class="border-b">
+        <input type="checkbox" id="faq1" class="accordion-toggle hidden" aria-hidden="true">
+        <label for="faq1" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
+          <span class="text-lg font-semibold">How do I apply for a mortgage with you?</span>
+          <span class="accordion-icon transform transition-transform">↓</span>
+        </label>
+        <div class="accordion-content hidden">
+          <p class="text-gray-600 pb-4">Apply via our contact form or call us directly. Our team will guide you every step of the way.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <h2>What Our Clients Say</h2>
-        <p>Real stories from satisfied homeowners</p>
+      <div class="border-b">
+        <input type="checkbox" id="faq2" class="accordion-toggle hidden" aria-hidden="true">
+        <label for="faq2" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
+          <span class="text-lg font-semibold">How long does mortgage approval take?</span>
+          <span class="accordion-icon transform transition-transform">↓</span>
+        </label>
+        <div class="accordion-content hidden">
+          <p class="text-gray-600 pb-4">Typically 1-2 weeks, depending on your financial details and lender requirements.</p>
+        </div>
       </div>
-      <div class="testimonials-slider">
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            As first-time home buyers, we were overwhelmed by the mortgage process. Montreal Mortgage Solutions made everything clear and found us an amazing rate that saved us thousands over the term of our mortgage.
-          </div>
-          <div class="testimonial-author">
-            <img src="https://via.placeholder.com/50x50.png?text=J" alt="Client" class="author-avatar">
-            <div class="author-info">
-              <h4>Jean and Marie Tremblay</h4>
-              <p>First-Time Homebuyers</p>
-            </div>
-          </div>
+      <div class="border-b">
+        <input type="checkbox" id="faq3" class="accordion-toggle hidden" aria-hidden="true">
+        <label for="faq3" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
+          <span class="text-lg font-semibold">What factors affect my mortgage rate?</span>
+          <span class="accordion-icon transform transition-transform">↓</span>
+        </label>
+        <div class="accordion-content hidden">
+          <p class="text-gray-600 pb-4">Credit score, down payment, loan term, and market conditions all play a role.</p>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            I thought I wouldn't qualify for a mortgage as a self-employed business owner, but the team found a solution that worked for my unique income situation. I'm now in my dream home!
-          </div>
-          <div class="testimonial-author">
-            <img src="https://via.placeholder.com/50x50.png?text=S" alt="Client" class="author-avatar">
-            <div class="author-info">
-              <h4>Sophie Bergeron</h4>
-              <p>Business Owner</p>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            When our mortgage was up for renewal, Montreal Mortgage Solutions negotiated a much better rate than our bank offered. The process was effortless and saved us considerably.
-          </div>
-          <div class="testimonial-author">
-            <img src="https://via.placeholder.com/50x50.png?text=R" alt="Client" class="author-avatar">
-            <div class="author-info">
-              <h4>Robert Chen</h4>
-              <p>Mortgage Renewal Client</p>
-            </div>
-          </div>
+      </div>
+      <div class="border-b">
+        <input type="checkbox" id="faq4" class="accordion-toggle hidden" aria-hidden="true">
+        <label for="faq4" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
+          <span class="text-lg font-semibold">Can I get a mortgage for an investment property?</span>
+          <span class="accordion-icon transform transition-transform">↓</span>
+        </label>
+        <div class="accordion-content hidden">
+          <p class="text-gray-600 pb-4">Yes, we specialize in mortgages for investment properties. Contact us for details.</p>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Calculator Section -->
-  <section class="calculator-section" id="calculator">
-    <div class="container">
-      <div class="section-header">
-        <h2>Try Our Mortgage Calculator</h2>
-        <p>Plan your mortgage with our easy-to-use calculator tool</p>
-      </div>
-      <div class="calculator-preview">
-        <img src="https://via.placeholder.com/600x400.png?text=Mortgage+Calculator+Preview" alt="Mortgage Calculator Preview" class="calculator-image">
-        <p>Our comprehensive mortgage calculator helps you determine your qualification amount, monthly payments, and overall affordability based on your unique financial situation.</p>
-        <a href="calculator.html" class="cta-button">Launch Mortgage Calculator</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-header">
-        <h2>Contact Us</h2>
-        <p>We're here to answer your mortgage questions</p>
-      </div>
-      <div class="contact-content">
-        <div class="contact-info">
-          <div class="contact-item">
-            <div class="contact-icon">📍</div>
-            <div>
-              <h4>Visit Us</h4>
-              <p>1234 Rue Sainte-Catherine, Montreal, QC H3B 1A2</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">📞</div>
-            <div>
-              <h4>Call Us</h4>
-              <p>(514) 555-1234</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">✉️</div>
-            <div>
-              <h4>Email Us</h4>
-              <p>info@montrealmortgagesolutions.com</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">🕒</div>
-            <div>
-              <h4>Business Hours</h4>
-              <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
-              <p>Saturday: 10:00 AM - 2:00 PM</p>
-              <p>Sunday: Closed</p>
-            </div>
-          </div>
-        </div>
-        <div class="contact-form">
-          <form>
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="message">Your Message</label>
-              <textarea id="message" class="form-control form-control-textarea" required></textarea>
-            </div>
-            <button type="submit" class="submit-button">Send Message</button>
-          </form>
-        </div>
-      </div>
-    </div>
+    <script>
+      document.querySelectorAll('.accordion-toggle').forEach(toggle => {
+        toggle.addEventListener('change', () => {
+          const content = toggle.nextElementSibling.nextElementSibling;
+          content.classList.toggle('hidden');
+          toggle.setAttribute('aria-expanded', toggle.checked);
+        });
+      });
+    </script>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
+  <footer id="contact" class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
         <div>
-          <div class="footer-logo">Montreal Mortgage Solutions</div>
-          <p class="footer-text">Your trusted partner in home financing, helping you make informed mortgage decisions.</p>
-          <div class="footer-social">
-            <a href="#" class="social-icon">f</a>
-            <a href="#" class="social-icon">t</a>
-            <a href="#" class="social-icon">in</a>
-            <a href="#" class="social-icon">ig</a>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-accent-color rounded-full"></div>
+            <h3 class="text-2xl font-bold">Montreal Mortgages</h3>
+          </div>
+          <p class="text-sm text-gray-300 mb-4">Get exclusive mortgage insights and market updates delivered to your inbox.</p>
+          <form class="flex gap-2" onsubmit="return validateNewsletterForm(event)">
+            <input type="email" id="newsletter-email" placeholder="email@example.com" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-color text-white" required aria-describedby="email-error">
+            <button type="submit" class="btn-primary">Subscribe</button>
+            <p id="email-error" class="text-red-500 text-sm hidden">Please enter a valid email.</p>
+          </form>
+          <script>
+            function validateNewsletterForm(event) {
+              event.preventDefault();
+              const email = document.getElementById('newsletter-email').value;
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              const errorElement = document.getElementById('email-error');
+              if (!emailRegex.test(email)) {
+                errorElement.classList.remove('hidden');
+                return false;
+              }
+              errorElement.classList.add('hidden');
+              alert('Subscribed successfully!');
+              return true;
+            }
+          </script>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Pages</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-accent-color transition">Home</a></li>
+            <li><a href="#" class="hover:text-accent-color transition">About Us</a></li>
+            <li><a href="#calculator" class="hover:text-accent-color transition">Mortgage Calculator</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-accent-color transition">Blog</a></li>
+            <li><a href="#" class="hover:text-accent-color transition">Guides</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="tel:+15145551234" class="hover:text-accent-color transition">+1 (514) 555-1234</a></li>
+            <li><a href="mailto:info@montrealmortgages.com" class="hover:text-accent-color transition">info@montrealmortgages.com</a></li>
+            <li>1234 Saint-Catherine St W, Montreal, QC H3G 1P1</li>
+          </ul>
+          <div class="flex gap-3 mt-4">
+            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></a>
+            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7v-3h3V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.91 8-4.94 8-9.95z"/></svg></a>
+            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 15h-3v-2h3v-3h-3V9h3V7h-5v10h5v-2zM7 7h3v10H7V7z"/></svg></a>
           </div>
         </div>
-        <div>
-          <h3 class="footer-title">Quick Links</h3>
-          <ul class="footer-links">
-            <li class="footer-link"><a href="#home">Home</a></li>
-            <li class="footer-link"><a href="#services">Services</a></li>
-            <li class="footer-link"><a href="#about">About Us</a></li>
-            <li class="footer-link"><a href="#testimonials">Testimonials</a></li>
-            <li class="footer-link"><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="footer-title">Services</h3>
-          <ul class="footer-links">
-            <li class="footer-link"><a href="#">First-Time Home Buyers</a></li>
-            <li class="footer-link"><a href="#">Mortgage Refinancing</a></li>
-            <li class="footer-link"><a href="#">Investment Properties</a></li>
-            <li class="footer-link"><a href="#">Mortgage Renewal</a></li>
-            <li class="footer-link"><a href="#">Self-Employed Solutions</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="footer-title">Resources</h3>
-          <ul class="footer-links">
-            <li class="footer-link"><a href="calculator.html">Mortgage Calculator</a></li>
-            <li class="footer-link"><a href="#">Mortgage Guides</a></li>
-            <li class="footer-link"><a href="#">Latest Rates</a></li>
-            <li class="footer-link"><a href="#">FAQ</a></li>
-            <li class="footer-link"><a href="#">Blog</a></li>
-          </ul>
-        </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Montreal Mortgage Solutions. All rights reserved. FSCO #12345</p>
+      <div class="flex justify-between items-center mt-8 text-sm text-gray-400">
+        <p>Designed by Montreal Mortgages</p>
+        <p>© 2025 Montreal Mortgages. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
 
+  <!-- Smooth Scroll Script -->
   <script>
-    // Mobile Menu Toggle
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    
-    if (mobileMenuToggle && navMenu) {
-      mobileMenuToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-      });
-    }
-    
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-          
-          // Close mobile menu if open
-          if (navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-          }
-        }
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
       });
     });
   </script>
