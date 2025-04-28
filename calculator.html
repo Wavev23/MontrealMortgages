@@ -2371,6 +2371,195 @@
   </div>
   
   <script>
+    // Fix for mortgage calculation issue
+    function fixMortgageCalculation() {
+      // Override the calculateMortgage function with a corrected version
+      window.calculateMortgage = function() {
+        // First, validate that required fields are filled in
+        const requiredFields = [
+          { id: 'income-amount', label: 'Household Income' },
+          { id: 'property-price', label: 'Property Price' },
+          { id: 'down-payment', label: 'Down Payment' },
+          { id: 'interest-rate', label: 'Interest Rate' }
+        ];
+        
+        let missingFields = [];
+        
+        requiredFields.forEach(field => {
+          const element = document.getElementById(field.id);
+          if (!element || !element.value || parseFloat(element.value) === 0) {
+            missingFields.push(field.label);
+          }
+        });
+        
+        if (missingFields.length > 0) {
+          alert(`Please fill in the following required fields:\n- ${missingFields.join('\n- ')}`);
+          return;
+        }
+        
+        // Show loading state
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.className = 'loading-overlay';
+        loadingOverlay.innerHTML = `
+          <div class="loading-message">
+            <div class="spinner"></div>
+            <p style="margin-top: 20px;">Calculating your mortgage qualification...</p>
+          </div>
+        `;
+        document.body.appendChild(loadingOverlay);
+        
+        setTimeout(function() {
+          try {
+            // Get form values
+            const propertyPrice = parseFloat(document.getElementById('property-price').value) || 0;
+            const downPayment = parseFloat(document.getElementById('down-payment').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interest-rate').value) || 0;
+            const amortizationPeriod = parseInt(document.getElementById('amortization-period').value) || 25;
+            
+            // Get expenses
+            const condoFees = parseFloat(document.getElementById('condo-fees').value) || 0;
+            const municipalTax = parseFloat(document.getElementById('municipal-tax').value) || 0;
+            const schoolTax = parseFloat(document.getElementById('school-tax').value) || 0;
+            const heatingFees = parseFloat(document.getElementById('heating-fees').value) || 0;
+            
+            // Calculate monthly tax payments
+            const monthlyMunicipalTax = municipalTax / 12;
+            const monthlySchoolTax = schoolTax / 12;
+            
+            // Basic mortgage calculations
+            const mortgageAmount = propertyPrice - downPayment;
+            const ltv = (mortgageAmount / propertyPrice) * 100;
+            
+            // Calculate monthly payment
+            // This is the PMT formula for mortgage payments
+            const monthlyRate = interestRate / 100 / 12;
+            const totalPayments = amortizationPeriod * 12;
+            let monthlyPayment = 0;
+            
+            if (monthlyRate === 0) {
+              monthlyPayment = mortgageAmount / totalPayments;
+            } else {
+              monthlyPayment = mortgageAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments) / 
+                              (Math.pow(1 + monthlyRate, totalPayments) - 1);
+            }
+            
+            console.log("Monthly payment:", monthlyPayment);
+            
+            // Update payment amounts in UI
+            document.getElementById('monthly-amount').textContent = '$' + monthlyPayment.toFixed(2);
+            document.getElementById('biweekly-amount').textContent = '$' + ((monthlyPayment * 12) / 26).toFixed(2);
+            document.getElementById('weekly-amount').textContent = '$' + ((monthlyPayment * 12) / 52).toFixed(2);
+            
+            // Calculate income and debts
+            const monthlyIncome = calculateTotalMonthlyIncome();
+            const monthlyDebts = calculateTotalMonthlyDebts();
+            
+            // Calculate housing costs
+            const totalHousingCosts = monthlyPayment + condoFees + monthlyMunicipalTax + monthlySchoolTax + heatingFees;
+            
+            // Calculate GDS and TDS ratios
+            const gdsRatio = (totalHousingCosts / monthlyIncome) * 100;
+            const tdsRatio = ((totalHousingCosts + monthlyDebts) / monthlyIncome) * 100;
+            
+            // Update GDS and TDS in UI
+            document.getElementById('gds-ratio').textContent = gdsRatio.toFixed(1) + '%';
+            document.getElementById('tds-ratio').textContent = tdsRatio.toFixed(1) + '%';
+            
+            // Calculate CMHC insurance if applicable
+            let cmhcInsurance = 0;
+            if (ltv > 80 && propertyPrice < 1000000) {
+              const isInvestmentProperty = document.getElementById('owner-occupied-toggle').checked;
+              const propertyTypeValue = document.getElementById('property-type').value;
+              const is5PlusProperty = propertyTypeValue === 'five-plus-units';
+              
+              if (!isInvestmentProperty && !is5PlusProperty) {
+                cmhcInsurance = calculateCMHCPremium(mortgageAmount, propertyPrice);
+              }
+            }
+            
+            // Update CMHC insurance in UI
+            document.getElementById('cmhc-insurance').textContent = '$' + cmhcInsurance.toLocaleString();
+            
+            // Calculate max qualification amount
+            // Using GDS and TDS limits to determine maximum qualification
+            const gdsLimit = 0.32; // 32% GDS threshold
+            const tdsLimit = 0.40; // 40% TDS threshold
+            
+            const maxGDSHousingCosts = monthlyIncome * gdsLimit;
+            const maxTDSHousingCosts = (monthlyIncome * tdsLimit) - monthlyDebts;
+            
+            const maxHousingCosts = Math.min(maxGDSHousingCosts, maxTDSHousingCosts);
+            const maxMortgagePayment = maxHousingCosts - condoFees - monthlyMunicipalTax - monthlySchoolTax - heatingFees;
+            
+            let maxQualificationAmount = 0;
+            if (maxMortgagePayment > 0) {
+              if (monthlyRate === 0) {
+                maxQualificationAmount = maxMortgagePayment * totalPayments;
+              } else {
+                maxQualificationAmount = maxMortgagePayment * (Math.pow(1 + monthlyRate, totalPayments) - 1) / 
+                                        (monthlyRate * Math.pow(1 + monthlyRate, totalPayments));
+              }
+            }
+            
+            // Update max qualification amount in UI
+            document.getElementById('max-qualification-amount').textContent = '$' + Math.round(maxQualificationAmount).toLocaleString();
+            
+            // Update mortgage amount
+            document.getElementById('mortgage-amount').textContent = '$' + mortgageAmount.toLocaleString();
+            
+            // Update qualification status
+            const qualificationStatus = document.getElementById('qualification-status');
+            if (gdsRatio <= 32 && tdsRatio <= 40) {
+              qualificationStatus.className = 'qualification-status approved';
+              qualificationStatus.textContent = 'Approved';
+              qualificationStatus.setAttribute('data-status', 'approved');
+            } else if (gdsRatio <= 35 && tdsRatio <= 42) {
+              qualificationStatus.className = 'qualification-status warning';
+              qualificationStatus.textContent = 'Approved with Conditions';
+              qualificationStatus.setAttribute('data-status', 'conditions');
+            } else {
+              qualificationStatus.className = 'qualification-status denied';
+              qualificationStatus.textContent = 'Not Qualified';
+              qualificationStatus.setAttribute('data-status', 'denied');
+            }
+            
+            // Create payment chart
+            createPaymentChart(
+              monthlyPayment * 0.6, // Principal portion
+              monthlyPayment * 0.4, // Interest portion
+              monthlyMunicipalTax + monthlySchoolTax,
+              heatingFees,
+              condoFees
+            );
+            
+            // Generate recommendations
+            generateRecommendations(
+              propertyPrice,
+              downPayment,
+              ltv,
+              mortgageAmount,
+              cmhcInsurance,
+              gdsRatio,
+              tdsRatio,
+              32,
+              40,
+              monthlyIncome
+            );
+            
+            // Switch to results view
+            document.getElementById('form-container').classList.remove('active');
+            document.getElementById('results-container').classList.add('active');
+            
+          } catch (error) {
+            console.error('Calculation error:', error);
+            alert('There was an error calculating your mortgage. Please check your inputs and try again.');
+          } finally {
+            loadingOverlay.remove();
+          }
+        }, 500);
+      };
+    }
+
     // Function to enhance meeting booking with CTAs
     function enhanceMeetingBooking() {
       // Add contextual CTA to results screen
@@ -4244,6 +4433,8 @@
       if (calculateButton) {
         calculateButton.addEventListener('click', function(e) {
           e.preventDefault();
+          // Use the fixed calculation function 
+          fixMortgageCalculation();
           calculateMortgage();
         });
       }
@@ -4813,3 +5004,4 @@
   </script>
 </body>
 </html>
+
