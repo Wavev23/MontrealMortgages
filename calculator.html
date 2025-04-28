@@ -468,6 +468,7 @@
     
     .form-group {
       margin-bottom: 1.5rem;
+      position: relative;
     }
 
     .form-group:focus-within label {
@@ -1813,6 +1814,61 @@
         margin-top: 8px;
         text-align: center;
       }
+    }
+
+    /* Add tooltip styles */
+    .term-info {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 16px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 5px;
+      vertical-align: middle;
+      transition: all 0.2s ease;
+    }
+
+    .term-info:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .tooltip {
+      position: absolute;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      max-width: 300px;
+      box-shadow: 0 4px 12px var(--shadow-color);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      background: var(--card-bg);
+      border-left: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-color);
+      transform: rotate(45deg);
     }
   </style>
 </head>
@@ -3516,6 +3572,50 @@
           window.print();
         });
       }
+
+      // Add tooltip functionality
+      const termsToAdd = ['gdsRatio', 'tdsRatio', 'cmhcInsurance', 'amortization', 'downPayment', 'ltv', 'preApproval', 'mortgageTerm'];
+      termsToAdd.forEach(term => {
+        const label = document.querySelector(`label[for="${term}"]`);
+        if (label) {
+          const infoIcon = document.createElement('span');
+          infoIcon.className = 'term-info';
+          infoIcon.textContent = 'i';
+          infoIcon.setAttribute('data-term', term);
+          label.appendChild(infoIcon);
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('term-info')) {
+          const term = e.target.getAttribute('data-term');
+          const currentLang = currentLanguage || 'en';
+          const explanation = mortgageTerms[currentLang][term];
+          
+          document.querySelectorAll('.tooltip').forEach(t => t.remove());
+          
+          const tooltip = document.createElement('div');
+          tooltip.className = 'tooltip';
+          tooltip.textContent = explanation;
+          
+          const rect = e.target.getBoundingClientRect();
+          tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
+          tooltip.style.left = `${rect.left + window.scrollX - 20}px`;
+          
+          document.body.appendChild(tooltip);
+          
+          setTimeout(() => tooltip.classList.add('show'), 10);
+          
+          const hideTooltip = function(e) {
+            if (!e.target.classList.contains('term-info')) {
+              tooltip.remove();
+              document.removeEventListener('click', hideTooltip);
+            }
+          };
+          
+          document.addEventListener('click', hideTooltip);
+        }
+      });
     }
     
     // Toggle rental income field based on property type and occupancy
@@ -5001,6 +5101,50 @@
         }
       });
     }
+
+    // Mortgage terms translations
+    const mortgageTerms = {
+      en: {
+        gdsRatio: "Gross Debt Service Ratio - The percentage of your gross monthly income needed to pay housing expenses.",
+        tdsRatio: "Total Debt Service Ratio - The percentage of your gross monthly income needed to cover housing expenses and other debt obligations.",
+        cmhcInsurance: "CMHC Insurance - Mortgage default insurance required for down payments less than 20% of the purchase price.",
+        amortization: "Amortization Period - The total length of time it will take to pay off your entire mortgage.",
+        downPayment: "Down Payment - The initial upfront portion of the total purchase price that you pay when buying a home.",
+        ltv: "Loan-to-Value Ratio - The mortgage amount divided by the purchase price, expressed as a percentage.",
+        preApproval: "Pre-Approval - A preliminary evaluation from a lender that determines how much they would be willing to lend you.",
+        mortgageTerm: "Mortgage Term - The length of time your mortgage agreement and interest rate remain in effect."
+      },
+      fr: {
+        gdsRatio: "Ratio du service de la dette brute - Le pourcentage de votre revenu mensuel brut nécessaire pour payer les dépenses de logement.",
+        tdsRatio: "Ratio du service de la dette totale - Le pourcentage de votre revenu mensuel brut nécessaire pour couvrir les dépenses de logement et autres dettes.",
+        cmhcInsurance: "Assurance SCHL - Assurance prêt hypothécaire requise pour les mises de fonds inférieures à 20% du prix d'achat.",
+        amortization: "Période d'amortissement - La durée totale nécessaire pour rembourser entièrement votre hypothèque.",
+        downPayment: "Mise de fonds - La portion initiale du prix d'achat total que vous payez lors de l'achat d'une maison.",
+        ltv: "Ratio prêt-valeur - Le montant de l'hypothèque divisé par le prix d'achat, exprimé en pourcentage.",
+        preApproval: "Préapprobation - Une évaluation préliminaire d'un prêteur qui détermine le montant qu'il serait prêt à vous prêter.",
+        mortgageTerm: "Terme hypothécaire - La durée pendant laquelle votre contrat hypothécaire et votre taux d'intérêt restent en vigueur."
+      },
+      es: {
+        gdsRatio: "Ratio de Servicio de Deuda Bruta - El porcentaje de su ingreso mensual bruto necesario para pagar los gastos de vivienda.",
+        tdsRatio: "Ratio de Servicio de Deuda Total - El porcentaje de su ingreso mensual bruto necesario para cubrir gastos de vivienda y otras deudas.",
+        cmhcInsurance: "Seguro CMHC - Seguro hipotecario requerido para pagos iniciales menores al 20% del precio de compra.",
+        amortization: "Período de Amortización - El tiempo total que tomará pagar su hipoteca completa.",
+        downPayment: "Pago Inicial - La porción inicial del precio total de compra que paga al comprar una casa.",
+        ltv: "Ratio Préstamo-Valor - El monto de la hipoteca dividido por el precio de compra, expresado como porcentaje.",
+        preApproval: "Pre-Aprobación - Una evaluación preliminar de un prestamista que determina cuánto estarían dispuestos a prestarle.",
+        mortgageTerm: "Plazo Hipotecario - El período durante el cual su acuerdo hipotecario y tasa de interés permanecen vigentes."
+      },
+      ru: {
+        gdsRatio: "Коэффициент обслуживания валового долга - Процент вашего валового месячного дохода, необходимый для оплаты жилищных расходов.",
+        tdsRatio: "Коэффициент обслуживания общего долга - Процент вашего валового месячного дохода, необходимый для покрытия жилищных расходов и других долговых обязательств.",
+        cmhcInsurance: "Страхование CMHC - Страхование ипотечного кредита, необходимое при первоначальном взносе менее 20% от цены покупки.",
+        amortization: "Период амортизации - Общая продолжительность времени, необходимая для полного погашения ипотеки.",
+        downPayment: "Первоначальный взнос - Первоначальная часть от общей стоимости покупки, которую вы платите при покупке дома.",
+        ltv: "Соотношение кредита к стоимости - Сумма ипотеки, разделенная на цену покупки, выраженная в процентах.",
+        preApproval: "Предварительное одобрение - Предварительная оценка кредитора, определяющая сумму, которую они готовы вам одолжить.",
+        mortgageTerm: "Срок ипотеки - Период времени, в течение которого действуют ваш ипотечный договор и процентная ставка."
+      }
+    };
   </script>
 </body>
 </html>
