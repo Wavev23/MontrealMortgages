@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +8,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --background-color: #F8FAFC;
-      --text-color: #1F2937;
-      --primary-color: #FFD700;
-      --accent-color: #87CEEB;
+      --background-color: #F8FAFC; /* Light gray */
+      --text-color: #1F2937; /* Dark gray */
+      --primary-color: #FFD700; /* Gold */
+      --accent-color: #87CEEB; /* Baby blue */
+      --card-bg: #FFFFFF; /* White */
+      --border-color: #E5E7EB; /* Light gray border */
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --gradient-card: linear-gradient(170deg, #FFFFFF, #F8FAFC);
     }
+
+    [data-theme="dark"] {
+      --primary-color: #FFD700; /* Gold */
+      --primary-light: #FFDF33; /* Lighter gold */
+      --primary-dark: #CCAC00; /* Darker gold */
+      --accent-color: #87CEEB; /* Baby blue */
+      --accent-light: #A7DEF5; /* Lighter baby blue */
+      --accent-dark: #5FAAC2; /* Darker baby blue */
+      --background-color: #000000; /* Black */
+      --text-color: #F0F0F5; /* Off-white */
+      --card-bg: #1A1A1A; /* Dark gray */
+      --card-bg-rgb: 26, 26, 26;
+      --border-color: #333333;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --shadow-color-rgb: 0, 0, 0;
+      --accent-color-rgb: 135, 206, 235;
+      --gradient-card: linear-gradient(170deg, var(--card-bg), rgba(0,0,0,0.2));
+    }
+
     body {
       font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--background-color);
@@ -26,12 +49,15 @@
         radial-gradient(circle at 10% 20%, var(--primary-color), transparent 400px),
         radial-gradient(circle at 90% 80%, var(--accent-color), transparent 400px);
       background-attachment: fixed;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     h1, h2, h3, h4, h5 {
       font-family: 'Playfair Display', serif;
       color: var(--text-color);
       margin-bottom: 1rem;
     }
+
     .hero {
       background-image: url('https://images.unsplash.com/photo-1516321318428-287d8a659729?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
       background-size: cover;
@@ -42,31 +68,65 @@
       align-items: center;
       justify-content: center;
     }
+
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+      z-index: 1;
     }
+
+    .hero-content {
+      position: relative;
+      text-center;
+      text-white;
+      px-4;
+      z-index: 10;
+      background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 1rem;
+      z-index: -1;
+    }
+
+    .hero-content h1, .hero-content p {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
     .hero-content {
       animation: fadeIn 1s ease-in;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .btn-primary {
       background-color: var(--primary-color);
-      color: #1F2937;
+      color: var(--text-color);
       padding: 0.75rem 1.5rem;
       border-radius: 9999px;
       font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s;
     }
+
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
+
     .btn-secondary {
       border: 2px solid var(--accent-color);
       color: #FFFFFF;
@@ -75,28 +135,83 @@
       font-weight: 600;
       transition: background-color 0.2s, color 0.2s;
     }
+
     .btn-secondary:hover {
       background-color: var(--accent-color);
-      color: #1F2937;
+      color: var(--text-color);
     }
+
     .accordion-toggle:checked + .accordion-label .accordion-icon {
       transform: rotate(180deg);
     }
+
     .accordion-label {
       transition: background-color 0.2s;
     }
+
     .accordion-label:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: var(--shadow-color);
     }
+
     section {
       animation: fadeIn 0.8s ease-in;
     }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 50;
+      background-color: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--accent-color);
+      border-color: var(--accent-dark);
+    }
+
+    .theme-icon {
+      width: 24px;
+      height: 24px;
+      fill: var(--text-color);
+      transition: fill 0.3s;
+    }
+
+    .calculator-section {
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+    }
+
+    footer {
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+    }
+
+    .footer-input {
+      background-color: var(--border-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
     @media (max-width: 640px) {
       body {
         background-attachment: scroll;
       }
       .hero {
         min-height: 60vh;
+      }
+      .hero-content {
+        padding: 1.5rem;
       }
       .hero-content h1 {
         font-size: 2.5rem;
@@ -108,13 +223,41 @@
         flex-direction: column;
         gap: 1rem;
       }
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+      }
+      .theme-icon {
+        width: 20px;
+        height: 20px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
+    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+    <svg class="theme-icon moon-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  </button>
+
   <!-- Hero Section -->
   <header class="hero">
-    <div class="hero-content relative text-center text-white px-4 z-10">
+    <div class="hero-content">
       <h1 class="text-5xl md:text-6xl font-bold mb-4 tracking-tight">Your Dream Home Starts Here</h1>
       <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">Expert Mortgage Advice & Competitive Rates in Montreal</p>
       <div class="flex justify-center gap-4">
@@ -136,7 +279,7 @@
   </section>
 
   <!-- Mortgage Calculator Section -->
-  <section id="calculator" class="container mx-auto px-4 py-20 bg-gray-50">
+  <section id="calculator" class="container mx-auto px-4 py-20 calculator-section">
     <h2 class="text-center text-sm uppercase tracking-widest text-gray-500 mb-2">Plan Your Future</h2>
     <h3 class="text-center text-4xl md:text-5xl font-bold mb-12">Mortgage Calculator</h3>
     <div class="text-center">
@@ -217,7 +360,7 @@
   </section>
 
   <!-- Footer -->
-  <footer id="contact" class="bg-gray-900 text-white py-12">
+  <footer id="contact" class="text-white py-12">
     <div class="container mx-auto px-4">
       <div class="grid md:grid-cols-4 gap-8">
         <div>
@@ -227,7 +370,7 @@
           </div>
           <p class="text-sm text-gray-300 mb-4">Get exclusive mortgage insights and market updates delivered to your inbox.</p>
           <form class="flex gap-2" onsubmit="return validateNewsletterForm(event)">
-            <input type="email" id="newsletter-email" placeholder="email@example.com" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-color text-white" required aria-describedby="email-error">
+            <input type="email" id="newsletter-email" placeholder="email@example.com" class="w-full p-3 footer-input rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-color" required aria-describedby="email-error">
             <button type="submit" class="btn-primary">Subscribe</button>
             <p id="email-error" class="text-red-500 text-sm hidden">Please enter a valid email.</p>
           </form>
@@ -283,8 +426,9 @@
     </div>
   </footer>
 
-  <!-- Smooth Scroll Script -->
+  <!-- Smooth Scroll and Theme Toggle Scripts -->
   <script>
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -293,6 +437,25 @@
         });
       });
     });
+
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.querySelector('.sun-icon').classList.toggle('hidden');
+      document.querySelector('.moon-icon').classList.toggle('hidden');
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+      document.querySelector('.sun-icon').classList.add('hidden');
+      document.querySelector('.moon-icon').classList.remove('hidden');
+    }
   </script>
 </body>
 </html>
