@@ -1870,6 +1870,58 @@
       border-top: 1px solid var(--border-color);
       transform: rotate(45deg);
     }
+
+    /* Add Calculator Button Styles */
+    .calculator-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: var(--primary-color);
+        color: black;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(var(--shadow-color-rgb), 0.2);
+    }
+
+    .calculator-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(var(--shadow-color-rgb), 0.3);
+    }
+
+    .calculator-cta .icon {
+        font-size: 1.2rem;
+    }
+
+    /* Calculator Button Variations */
+    .calculator-cta.floating {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        border-radius: 50px;
+        padding: 12px 28px;
+    }
+
+    .calculator-cta.inline {
+        margin: 1rem 0;
+    }
+
+    .calculator-cta.hero {
+        font-size: 1.1rem;
+        padding: 14px 32px;
+    }
+
+    @media (max-width: 768px) {
+        .calculator-cta.floating {
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
   </style>
 </head>
 <body>
@@ -5148,4 +5200,3 @@
   </script>
 </body>
 </html>
-
