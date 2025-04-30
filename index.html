@@ -1,461 +1,1699 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Montreal Mortgage Experts - Best Rates & Advice</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --background-color: #F8FAFC; /* Light gray */
-      --text-color: #1F2937; /* Dark gray */
-      --primary-color: #FFD700; /* Gold */
-      --accent-color: #87CEEB; /* Baby blue */
-      --card-bg: #FFFFFF; /* White */
-      --border-color: #E5E7EB; /* Light gray border */
-      --shadow-color: rgba(0, 0, 0, 0.1);
-      --gradient-card: linear-gradient(170deg, #FFFFFF, #F8FAFC);
-    }
-
-    [data-theme="dark"] {
-      --primary-color: #FFD700; /* Gold */
-      --primary-light: #FFDF33; /* Lighter gold */
-      --primary-dark: #CCAC00; /* Darker gold */
-      --accent-color: #87CEEB; /* Baby blue */
-      --accent-light: #A7DEF5; /* Lighter baby blue */
-      --accent-dark: #5FAAC2; /* Darker baby blue */
-      --background-color: #000000; /* Black */
-      --text-color: #F0F0F5; /* Off-white */
-      --card-bg: #1A1A1A; /* Dark gray */
-      --card-bg-rgb: 26, 26, 26;
-      --border-color: #333333;
-      --shadow-color: rgba(0, 0, 0, 0.3);
-      --shadow-color-rgb: 0, 0, 0;
-      --accent-color-rgb: 135, 206, 235;
-      --gradient-card: linear-gradient(170deg, var(--card-bg), rgba(0,0,0,0.2));
-    }
-
-    body {
-      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 0 20px;
-      position: relative;
-      overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 10% 20%, var(--primary-color), transparent 400px),
-        radial-gradient(circle at 90% 80%, var(--accent-color), transparent 400px);
-      background-attachment: fixed;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    h1, h2, h3, h4, h5 {
-      font-family: 'Playfair Display', serif;
-      color: var(--text-color);
-      margin-bottom: 1rem;
-    }
-
-    .hero {
-      background-image: url('https://images.unsplash.com/photo-1516321318428-287d8a659729?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      text-center;
-      text-white;
-      px-4;
-      z-index: 10;
-      background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .hero-content::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 1rem;
-      z-index: -1;
-    }
-
-    .hero-content h1, .hero-content p {
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero-content {
-      animation: fadeIn 1s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn-primary {
-      background-color: var(--primary-color);
-      color: var(--text-color);
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .btn-secondary {
-      border: 2px solid var(--accent-color);
-      color: #FFFFFF;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background-color: var(--accent-color);
-      color: var(--text-color);
-    }
-
-    .accordion-toggle:checked + .accordion-label .accordion-icon {
-      transform: rotate(180deg);
-    }
-
-    .accordion-label {
-      transition: background-color 0.2s;
-    }
-
-    .accordion-label:hover {
-      background-color: var(--shadow-color);
-    }
-
-    section {
-      animation: fadeIn 0.8s ease-in;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 50;
-      background-color: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-
-    .theme-toggle:hover {
-      background-color: var(--accent-color);
-      border-color: var(--accent-dark);
-    }
-
-    .theme-icon {
-      width: 24px;
-      height: 24px;
-      fill: var(--text-color);
-      transition: fill 0.3s;
-    }
-
-    .calculator-section {
-      background-color: var(--card-bg);
-      transition: background-color 0.3s;
-    }
-
-    footer {
-      background-color: var(--card-bg);
-      transition: background-color 0.3s;
-    }
-
-    .footer-input {
-      background-color: var(--border-color);
-      border-color: var(--border-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-    }
-
-    @media (max-width: 640px) {
-      body {
-        background-attachment: scroll;
-      }
-      .hero {
-        min-height: 60vh;
-      }
-      .hero-content {
-        padding: 1.5rem;
-      }
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-      .hero-content p {
-        font-size: 1.25rem;
-      }
-      .hero-content .flex {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .theme-toggle {
-        top: 10px;
-        right: 10px;
-        width: 36px;
-        height: 36px;
-      }
-      .theme-icon {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montreal Mortgage Experts | 5 Key Tips to Qualify & Buy Your Home</title>
+    <meta name="description" content="Unlock your Montreal home purchase: discover 5 essential tips to qualify for a mortgage, get the best rates, and buy with confidence.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="5 Key Tips to Qualify for Your Montreal Home">
+    <meta property="og:description" content="Unlock your Montreal home purchase: discover 5 essential tips to qualify for a mortgage, get the best rates, and buy with confidence.">
+    <meta property="og:image" content="https://montrealmortgage.ca/images/og-image.jpg"> <!-- Replace with real image URL -->
+    <meta property="og:url" content="https://montrealmortgage.ca">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1d3557;
+            --primary-light: #2d4a6f;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --accent-light: #fef3c7;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --card: #fff;
+            --card-hover: #f8f9fa;
+            --radius: 18px;
+            --radius-sm: 8px;
+            --shadow: 0 8px 32px rgba(30,41,59,0.08);
+            --shadow-sm: 0 4px 12px rgba(30,41,59,0.05);
+            --shadow-lg: 0 12px 42px rgba(30,41,59,0.12);
+            --section-spacing: 5rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 80px;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #f8fafc;
+            --primary-light: #e2e8f0;
+            --accent: #f59e0b;
+            --accent-dark: #fbbf24;
+            --accent-light: #422006;
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --card: #1e293b;
+            --card-hover: #273449;
+            --shadow: 0 8px 32px rgba(0,0,0,0.2);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 12px 42px rgba(0,0,0,0.25);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--header-height) + 20px);
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+        
+        .section {
+            margin: var(--section-spacing) auto;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 3rem 2rem;
+            transition: var(--transition);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--card);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -1px;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .logo:hover {
+            color: var(--accent);
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 1.2rem;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease-in-out;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.cta {
+            background: var(--accent);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-left: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        nav a.cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Hero Section */
+        .luxury-hero {
+            min-height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://pfst.cf2.poecdn.net/base/image/8391ae52715f134de61839d94718036e67523d60932fc309089e184193d719c6?w=1024&h=1024') center center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -1px;
+            border-radius: 0 0 var(--radius) var(--radius);
+            overflow: hidden;
+        }
+        
+        .luxury-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(29,53,87,0.25) 0%, rgba(245,158,11,0.2) 100%);
+            z-index: 1;
+        }
+        
+        .luxury-hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            max-width: 800px;
+            padding: 3rem 1.5rem;
+            animation: fadeIn 1s ease-out;
+            background: rgba(0,0,0,0.5);
+            border-radius: var(--radius);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        
+        .luxury-hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+            line-height: 1.2;
+        }
+        
+        .luxury-hero-content p {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: #f3f4f6;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 1rem 2.2rem;
+            border-radius: var(--radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border: 2px solid transparent;
+        }
+        
+        .btn.primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn.primary:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid #fff;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn.secondary:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Intro Section */
+        .intro-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            justify-content: center;
+            gap: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .intro-left {
+            flex: 1 1 450px;
+            min-width: 300px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--card);
+        }
+        
+        .intro-text {
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        
+        .intro-cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .intro-right {
+            flex: 1 1 340px;
+            min-width: 300px;
+            background: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 4rem 3rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .intro-photo-container {
+            position: relative;
+            width: 260px;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .intro-photo {
+            width: 260px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #fff;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            transition: transform 0.5s ease;
+        }
+        
+        .intro-photo:hover {
+            transform: scale(1.03);
+        }
+        
+        .intro-name {
+            position: relative;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-sm);
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 100%;
+            max-width: 260px;
+            transition: var(--transition);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
+        }
+        
+        .intro-title-under {
+            margin-top: 0.5rem;
+            font-size: 1.05rem;
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+        
+        .intro-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .intro-btns .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* Coverage Section */
+        .coverage-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .coverage-list {
+            flex: 1 1 350px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .coverage-list li {
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .coverage-list li:hover {
+            background: var(--card-hover);
+            transform: translateX(5px);
+        }
+        
+        .coverage-list li span {
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .coverage-image {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Montreal Map Styles */
+        .montreal-map {
+            width: 100%;
+            max-width: 450px;
+            height: 350px;
+            background: var(--card-hover);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .montreal-map:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .map-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+        
+        .map-tooltip {
+            position: absolute;
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 5;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .map-region {
+            transition: fill 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .map-region:hover {
+            transform: translate(-2px, -2px);
+        }
+        
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            text-align: center;
+            padding: 3.5rem 2rem;
+            border-radius: var(--radius);
+            margin: var(--section-spacing) auto;
+        }
+        
+        .cta-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 5vw, 2.3rem);
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        
+        .cta-banner p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-banner .btn {
+            margin: 0 auto;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--card);
+            padding: 3rem 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+            margin-top: var(--section-spacing);
+        }
+        
+        .footer-nav {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .footer-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem;
+        }
+        
+        .footer-nav a:hover {
+            color: var(--accent);
+        }
+        
+        /* Controls */
+        .control-btn {
+            background: var(--card);
+            border: 1px solid var(--accent);
+            padding: 0.6rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            right: 20px;
+            top: 100px;
+            z-index: 100;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .theme-toggle svg,
+        .theme-toggle .icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .theme-toggle.active {
+            background: var(--accent);
+            border-color: var(--primary);
+        }
+        
+        .theme-toggle.active .icon {
+            color: #fff;
+        }
+        
+        .language-selector {
+            position: fixed;
+            right: 20px;
+            top: 160px;
+            z-index: 100;
+            background: var(--card);
+            border-radius: 30px;
+            padding: 0.6rem 1rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--accent);
+        }
+        
+        .language-selector:hover {
+            box-shadow: var(--shadow);
+        }
+        
+        .language-selector label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            color: var(--text-muted);
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding-right: 1rem;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
+        
+        .language-selector select option {
+            background: var(--card);
+            color: var(--text);
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            border: none;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--accent-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Image placeholders */
+        img {
+            display: block;
+            background: #eee;
+            transition: var(--transition);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* Loading indicators */
+        .skeleton {
+            background: linear-gradient(110deg, var(--card-hover) 8%, var(--card) 18%, var(--card-hover) 33%);
+            border-radius: var(--radius-sm);
+            background-size: 200% 100%;
+            animation: shine 1.5s linear infinite;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position-x: -200%;
+            }
+        }
+        
+        /* Override Elfsight widget styles */
+        .elfsight-app-588cfe01-de00-49eb-b4f4-211afb6c8f6d {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .section {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .intro-left, .intro-right {
+                padding: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --section-spacing: 3rem;
+            }
+            
+            .luxury-hero-content p {
+                max-width: 100%;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .nav-wrapper nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--card);
+                box-shadow: var(--shadow-lg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1.5rem;
+                transition: var(--transition);
+                z-index: 1000;
+                padding: 2rem;
+            }
+            
+            .nav-wrapper nav a {
+                margin: 0.5rem 0;
+                font-size: 1.1rem;
+            }
+            
+            .nav-wrapper nav a.cta {
+                margin: 1rem 0 0;
+                width: 80%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .nav-wrapper.active nav {
+                right: 0;
+            }
+            
+            .intro-left {
+                text-align: center;
+            }
+            
+            .intro-cta-group {
+                justify-content: center;
+            }
+            
+            .intro-left, .intro-right {
+                flex: 1 1 100%;
+                border-radius: var(--radius);
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .coverage-list, .coverage-image {
+                flex: 1 1 100%;
+            }
+            
+            .coverage-content {
+                flex-direction: column-reverse;
+                gap: 2rem;
+            }
+            
+            .language-selector {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .intro-left, .intro-right {
+                padding: 2rem 1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .intro-photo-container {
+                width: 180px;
+            }
+            
+            .intro-photo {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .intro-name {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .hero-btn-group {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .hero-btn-group .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Theme Toggle Button -->
-  <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
-    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
-    <svg class="theme-icon moon-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
-  </button>
-
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1 class="text-5xl md:text-6xl font-bold mb-4 tracking-tight">Your Dream Home Starts Here</h1>
-      <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">Expert Mortgage Advice & Competitive Rates in Montreal</p>
-      <div class="flex justify-center gap-4">
-        <a href="calculator.html" class="btn-primary">Pre-Qualification</a>
-        <a href="https://calendly.com/representant" class="btn-secondary">Book a Meeting</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- Tips & Advice Section -->
-  <section class="container mx-auto px-4 py-20">
-    <h2 class="text-center text-sm uppercase tracking-widest text-gray-500 mb-2">Market Insights</h2>
-    <h3 class="text-center text-4xl md:text-5xl font-bold mb-12">Expert Mortgage Tips</h3>
-    <!-- Elfsight Blog | Untitled Blog -->
-    <div class="container mx-auto px-4 py-12">
-      <script src="https://static.elfsight.com/platform/platform.js" async></script>
-      <div class="elfsight-app-588cfe01-de00-49eb-b4f4-211afb6c8f6d" data-elfsight-app-lazy></div>
-    </div>
-  </section>
-
-  <!-- Mortgage Calculator Section -->
-  <section id="calculator" class="container mx-auto px-4 py-20 calculator-section">
-    <h2 class="text-center text-sm uppercase tracking-widest text-gray-500 mb-2">Plan Your Future</h2>
-    <h3 class="text-center text-4xl md:text-5xl font-bold mb-12">Mortgage Calculator</h3>
-    <div class="text-center">
-      <p class="text-center text-gray-600 mb-6">Start your mortgage planning with our easy-to-use calculator.</p>
-      <a href="calculator.html" class="btn-primary">Calculate Payments</a>
-    </div>
-  </section>
-
-  <!-- Testimonial Section -->
-  <section class="relative bg-cover bg-center py-20" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')">
-    <div class="absolute inset-0 bg-black opacity-60"></div>
-    <div class="relative container mx-auto px-4 text-center text-white">
-      <p class="text-2xl md:text-3xl font-light italic mb-6 max-w-3xl mx-auto">"Their expertise made our home-buying process seamless. They found us the perfect mortgage in Montreal’s competitive market."</p>
-      <div class="flex justify-center items-center gap-4">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Client, Sarah Johnson" class="w-12 h-12 rounded-full">
-        <div>
-          <p class="font-semibold">Sarah Johnson</p>
-          <p class="text-sm text-gray-200">Homebuyer</p>
+    <header id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">Montreal Mortgage</a>
+                <div class="nav-wrapper">
+                    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <nav id="main-nav">
+                        <a href="calculator.html" id="nav-calculator">Calculator</a>
+                        <a href="blog.html" id="nav-blog">Blog</a>
+                        <a href="https://calendly.com/representant" class="cta" target="_blank" rel="noopener noreferrer" id="nav-appointment">Book Appointment</a>
+                    </nav>
+                </div>
+            </div>
         </div>
-      </div>
+    </header>
+    
+    <section class="luxury-hero">
+        <div class="luxury-hero-content">
+            <h1 id="hero-title" class="animate-in">Montreal's Premier Mortgage Experience</h1>
+            <p id="hero-text" class="animate-in delay-1">
+                Discreet, expert guidance for discerning buyers.<br>
+                Unlock exclusive rates and tailored solutions for your Montreal dream home.
+            </p>
+            <div class="hero-btn-group">
+                <a href="calculator.html" class="btn primary animate-in delay-2" id="hero-calculator">
+                    <i class="fas fa-calculator"></i> Calculate Your Rate
+                </a>
+                <a href="https://calendly.com/representant" class="btn secondary animate-in delay-3" target="_blank" rel="noopener noreferrer" id="hero-appointment">
+                    <i class="fas fa-calendar-check"></i> Book a Free Call
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section intro-section">
+        <div class="intro-left">
+            <h2 class="section-title" id="intro-title">Your Trusted Montreal Mortgage Partner</h2>
+            <div class="intro-text" id="intro-text">
+                With years of experience and a passion for helping Montrealers achieve their dreams, I guide you through every step of your home buying journey. My commitment: clarity, transparency, and the best rates--so you can buy with confidence.
+            </div>
+            <div class="intro-cta-group">
+                <a href="calculator.html" class="btn primary" id="intro-prequalify-btn">
+                    <i class="fas fa-calculator"></i> Pre-Qualification
+                </a>
+                <a href="https://calendly.com/representant" class="btn secondary" target="_blank" rel="noopener noreferrer" id="intro-appointment-btn">
+                    <i class="fas fa-calendar-check"></i> Schedule a Call
+                </a>
+            </div>
+        </div>
+        <div class="intro-right">
+            <div class="intro-photo-container">
+                <img src="https://pfst.cf2.poecdn.net/base/image/aa388f65dd8ea34dde7a298fd27d0ba296f575076c60bd337fa2e2c63490416e?w=1211&h=1758" alt="Portrait of Vladimir Egnatosyan, Mortgage Representative" class="intro-photo" loading="lazy">
+                <div class="intro-name" id="intro-name">
+                    Vladimir Egnatosyan<br>
+                    <span style="font-size:0.95rem; font-weight:400;" id="intro-role">Mortgage Representative<br>Desjardins</span>
+                </div>
+            </div>
+            <div class="intro-title-under" id="intro-title-under">
+                <div>Mortgage Representative</div>
+                <div>Desjardins</div>
+            </div>
+            <div class="intro-btns">
+                <a href="calculator.html" class="btn primary">
+                    <i class="fas fa-calculator"></i> Pre-Qualification
+                </a>
+                <a href="https://calendly.com/representant" class="btn secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-calendar-check"></i> Schedule a Call
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" id="coverage-title">Montreal & Surrounding Areas Covered</h2>
+            <div class="coverage-content">
+                <ul class="coverage-list">
+                    <li><span>•</span> Montreal (all boroughs)</li>
+                    <li><span>•</span> Laval</li>
+                    <li><span>•</span> Longueuil</li>
+                    <li><span>•</span> South Shore</li>
+                    <li><span>•</span> West Island</li>
+                    <li><span>•</span> North Shore</li>
+                    <li><span>•</span> Vaudreuil-Dorion</li>
+                    <li><span>•</span> Brossard, Boucherville, Repentigny, Terrebonne, and more</li>
+                </ul>
+                <div class="coverage-image">
+                    <div class="montreal-map" id="montreal-map">
+                        <!-- Map will be generated here -->
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent);"></div>
+                            <span>Primary Coverage</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent-light);"></div>
+                            <span>Extended Coverage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" id="blog-title">Latest Blog Insights</h2>
+            <div class="elfsight-app-588cfe01-de00-49eb-b4f4-211afb6c8f6d" data-elfsight-app-lazy></div>
+        </div>
+    </section>
+    
+    <section class="cta-banner">
+        <div class="container">
+            <h2 class="section-title" id="cta-title" style="color: white; margin-bottom: 1.5rem;">Ready to Qualify for Your Montreal Home?</h2>
+            <p id="cta-text">Book a free, no-obligation call with a mortgage expert and get personalized advice for your situation.</p>
+            <a href="https://calendly.com/representant" class="btn primary" target="_blank" rel="noopener noreferrer" id="cta-btn">
+                <i class="fas fa-calendar-plus"></i> Book My Free Call
+            </a>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="calculator.html" id="footer-calculator">Calculator</a>
+                <a href="blog.html" id="footer-blog">Blog</a>
+                <a href="https://calendly.com/representant" target="_blank" rel="noopener noreferrer" id="footer-appointment">Book Appointment</a>
+            </div>
+            <div id="footer-copyright">© 2025 Montreal Mortgage. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <div class="language-selector">
+        <label for="language-select">Language:</label>
+        <select id="language-select" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="ru">Русский</option>
+        </select>
     </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section class="container mx-auto px-4 py-20">
-    <h2 class="text-center text-4xl md:text-5xl font-bold mb-12">Frequently Asked Questions</h2>
-    <div class="space-y-4 max-w-3xl mx-auto">
-      <div class="border-b">
-        <input type="checkbox" id="faq1" class="accordion-toggle hidden" aria-hidden="true">
-        <label for="faq1" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
-          <span class="text-lg font-semibold">How do I apply for a mortgage with you?</span>
-          <span class="accordion-icon transform transition-transform">↓</span>
-        </label>
-        <div class="accordion-content hidden">
-          <p class="text-gray-600 pb-4">Apply via our contact form or call us directly. Our team will guide you every step of the way.</p>
-        </div>
-      </div>
-      <div class="border-b">
-        <input type="checkbox" id="faq2" class="accordion-toggle hidden" aria-hidden="true">
-        <label for="faq2" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
-          <span class="text-lg font-semibold">How long does mortgage approval take?</span>
-          <span class="accordion-icon transform transition-transform">↓</span>
-        </label>
-        <div class="accordion-content hidden">
-          <p class="text-gray-600 pb-4">Typically 1-2 weeks, depending on your financial details and lender requirements.</p>
-        </div>
-      </div>
-      <div class="border-b">
-        <input type="checkbox" id="faq3" class="accordion-toggle hidden" aria-hidden="true">
-        <label for="faq3" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
-          <span class="text-lg font-semibold">What factors affect my mortgage rate?</span>
-          <span class="accordion-icon transform transition-transform">↓</span>
-        </label>
-        <div class="accordion-content hidden">
-          <p class="text-gray-600 pb-4">Credit score, down payment, loan term, and market conditions all play a role.</p>
-        </div>
-      </div>
-      <div class="border-b">
-        <input type="checkbox" id="faq4" class="accordion-toggle hidden" aria-hidden="true">
-        <label for="faq4" class="accordion-label flex justify-between items-center py-4 cursor-pointer">
-          <span class="text-lg font-semibold">Can I get a mortgage for an investment property?</span>
-          <span class="accordion-icon transform transition-transform">↓</span>
-        </label>
-        <div class="accordion-content hidden">
-          <p class="text-gray-600 pb-4">Yes, we specialize in mortgages for investment properties. Contact us for details.</p>
-        </div>
-      </div>
-    </div>
+    
+    <button class="theme-toggle control-btn" id="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" role="switch">
+        <i class="fas fa-sun icon" id="sun-icon"></i>
+        <i class="fas fa-moon icon" id="moon-icon" style="display:none;"></i>
+    </button>
+    
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
     <script>
-      document.querySelectorAll('.accordion-toggle').forEach(toggle => {
-        toggle.addEventListener('change', () => {
-          const content = toggle.nextElementSibling.nextElementSibling;
-          content.classList.toggle('hidden');
-          toggle.setAttribute('aria-expanded', toggle.checked);
-        });
-      });
-    </script>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact" class="text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid md:grid-cols-4 gap-8">
-        <div>
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-accent-color rounded-full"></div>
-            <h3 class="text-2xl font-bold">Montreal Mortgages</h3>
-          </div>
-          <p class="text-sm text-gray-300 mb-4">Get exclusive mortgage insights and market updates delivered to your inbox.</p>
-          <form class="flex gap-2" onsubmit="return validateNewsletterForm(event)">
-            <input type="email" id="newsletter-email" placeholder="email@example.com" class="w-full p-3 footer-input rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-color" required aria-describedby="email-error">
-            <button type="submit" class="btn-primary">Subscribe</button>
-            <p id="email-error" class="text-red-500 text-sm hidden">Please enter a valid email.</p>
-          </form>
-          <script>
-            function validateNewsletterForm(event) {
-              event.preventDefault();
-              const email = document.getElementById('newsletter-email').value;
-              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-              const errorElement = document.getElementById('email-error');
-              if (!emailRegex.test(email)) {
-                errorElement.classList.remove('hidden');
-                return false;
-              }
-              errorElement.classList.add('hidden');
-              alert('Subscribed successfully!');
-              return true;
+        // Montreal Map Generator - Realistic Version
+        function initMontrealMap() {
+            const mapContainer = document.getElementById('montreal-map');
+            const tooltip = document.createElement('div');
+            tooltip.className = 'map-tooltip';
+            mapContainer.appendChild(tooltip);
+            
+            // Create SVG map
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", "100%");
+            svg.setAttribute("viewBox", "0 0 800 600");
+            svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+            mapContainer.appendChild(svg);
+            
+            // Define map regions with more realistic paths
+            const regions = [
+                {
+                    name: "Montreal Island",
+                    path: "M354,308 C365,290 387,270 410,260 C435,252 457,250 478,258 C498,266 515,281 528,301 C538,320 542,340 538,360 C530,389 508,412 481,425 C455,437 424,438 398,428 C370,418 348,399 336,375 C326,356 323,334 332,312 C338,301 345,292 354,308 Z",
+                    fill: "var(--accent)",
+                    hover: "var(--accent-dark)",
+                    border: "#fff",
+                    center: [420, 330]
+                },
+                {
+                    name: "Laval",
+                    path: "M372,222 C384,210 406,201 428,198 C450,195 472,198 488,208 C500,216 506,230 502,245 C498,260 488,270 476,276 C456,284 432,284 410,277 C388,270 373,258 369,242 C367,234 368,226 372,222 Z",
+                    fill: "var(--accent)",
+                    hover: "var(--accent-dark)",
+                    border: "#fff",
+                    center: [435, 236]
+                },
+                {
+                    name: "Longueuil",
+                    path: "M490,350 C502,340 520,338 534,344 C548,350 558,361 562,375 C566,389 564,403 556,413 C548,423 536,428 522,426 C508,424 496,416 490,405 C484,394 482,381 486,368 C488,361 492,354 490,350 Z",
+                    fill: "var(--accent)",
+                    hover: "var(--accent-dark)",
+                    border: "#fff",
+                    center: [525, 375]
+                },
+                {
+                    name: "South Shore",
+                    path: "M432,430 C452,420 478,418 502,426 C526,434 544,448 552,468 C560,488 556,510 540,524 C524,538 500,544 476,540 C452,536 430,524 418,506 C406,488 404,466 412,446 C418,434 424,434 432,430 Z",
+                    fill: "var(--accent-light)",
+                    hover: "var(--accent)",
+                    border: "#fff",
+                    center: [480, 480]
+                },
+                {
+                    name: "West Island",
+                    path: "M249,286 C261,272 284,267 304,274 C324,281 338,298 340,318 C342,338 332,357 314,366 C296,375 274,374 258,362 C242,350 236,331 242,312 C244,301 249,290 249,286 Z",
+                    fill: "var(--accent)",
+                    hover: "var(--accent-dark)",
+                    border: "#fff",
+                    center: [290, 310]
+                },
+                {
+                    name: "North Shore",
+                    path: "M315,140 C337,124 368,120 396,130 C424,140 446,162 455,189 C464,216 459,244 440,264 C421,284 392,294 364,289 C336,284 312,264 300,239 C288,214 290,186 305,163 C308,158 311,146 315,140 Z",
+                    fill: "var(--accent-light)",
+                    hover: "var(--accent)",
+                    border: "#fff",
+                    center: [375, 190]
+                },
+                {
+                    name: "Vaudreuil-Dorion",
+                    path: "M130,280 C144,264 168,260 188,270 C208,280 220,300 218,322 C216,344 200,362 178,370 C156,378 132,374 116,360 C100,346 96,324 104,304 C108,294 124,286 130,280 Z",
+                    fill: "var(--accent-light)",
+                    hover: "var(--accent)",
+                    border: "#fff",
+                    center: [160, 310]
+                },
+                {
+                    name: "Repentigny",
+                    path: "M530,220 C550,210 578,215 596,232 C614,249 620,274 612,296 C604,318 584,332 562,336 C540,340 516,334 502,318 C488,302 484,280 492,260 C496,248 520,225 530,220 Z",
+                    fill: "var(--accent-light)",
+                    hover: "var(--accent)",
+                    border: "#fff",
+                    center: [550, 280]
+                },
+                {
+                    name: "Brossard",
+                    path: "M465,442 C480,432 500,430 518,438 C536,446 548,460 552,478 C556,496 550,514 536,526 C522,538 504,542 486,535 C468,528 456,514 452,496 C448,480 454,456 465,442 Z",
+                    fill: "var(--accent)",
+                    hover: "var(--accent-dark)",
+                    border: "#fff",
+                    center: [500, 490]
+                }
+            ];
+            
+            // Define water bodies
+            const waterBodies = [
+                // St. Lawrence River
+                {
+                    path: "M120,340 C180,328 240,322 300,318 C380,314 460,318 540,326 C620,334 700,346 780,362 L780,470 C700,452 620,440 540,432 C460,424 380,420 300,422 C220,424 140,430 60,442 L60,380 C80,366 100,352 120,340 Z",
+                    fill: "#e0f2fe",
+                    border: "#bae6fd"
+                },
+                // Rivière des Prairies (between Montreal and Laval)
+                {
+                    path: "M325,240 C345,235 370,232 395,230 C425,228 455,230 480,235 C505,240 525,248 540,258 L530,278 C515,268 495,260 470,254 C445,248 415,246 385,248 C355,250 330,254 310,260 L315,245 C318,242 322,241 325,240 Z",
+                    fill: "#e0f2fe",
+                    border: "#bae6fd"
+                },
+                // Rivière des Mille-Îles (north of Laval)
+                {
+                    path: "M345,185 C370,180 400,178 430,180 C460,182 485,187 505,195 L490,215 C472,207 450,202 425,200 C395,198 370,200 350,205 L345,185 Z",
+                    fill: "#e0f2fe",
+                    border: "#bae6fd"
+                },
+                // Lake Saint-Louis (west)
+                {
+                    path: "M130,320 C160,310 195,305 230,302 C265,299 300,300 330,304 L320,324 C295,320 265,319 235,322 C205,325 175,330 150,337 L130,320 Z",
+                    fill: "#e0f2fe",
+                    border: "#bae6fd"
+                }
+            ];
+            
+            // Define roads
+            const roads = [
+                // Highway 40
+                {
+                    path: "M150,300 C200,290 250,285 300,282 C350,280 400,280 450,284 C500,288 550,296 600,308",
+                    stroke: "#cbd5e1",
+                    width: 3
+                },
+                // Highway 15
+                {
+                    path: "M374,180 C380,220 385,260 390,300 C395,340 400,380 405,420",
+                    stroke: "#cbd5e1",
+                    width: 3
+                },
+                // Highway 13
+                {
+                    path: "M340,200 C345,240 350,280 355,320 C360,360 365,400 370,440",
+                    stroke: "#cbd5e1",
+                    width: 2
+                },
+                // Highway 20
+                {
+                    path: "M180,340 C230,330 280,325 330,322 C380,320 430,320 480,324 C530,328 580,336 630,348",
+                    stroke: "#cbd5e1",
+                    width: 3
+                },
+                // Highway 10
+                {
+                    path: "M440,370 C460,390 480,410 500,430 C520,450 540,470 560,490",
+                    stroke: "#cbd5e1",
+                    width: 2
+                },
+                // Champlain Bridge
+                {
+                    path: "M420,365 C435,375 450,385 465,395",
+                    stroke: "#cbd5e1",
+                    width: 4
+                },
+                // Jacques Cartier Bridge
+                {
+                    path: "M445,340 C455,350 465,360 475,370",
+                    stroke: "#cbd5e1",
+                    width: 4
+                }
+            ];
+            
+            // Draw base layer/background
+            const background = document.createElementNS(svgNS, "rect");
+            background.setAttribute("x", "0");
+            background.setAttribute("y", "0");
+            background.setAttribute("width", "800");
+            background.setAttribute("height", "600");
+            background.setAttribute("fill", "var(--card-hover)");
+            svg.appendChild(background);
+            
+            // Draw water bodies
+            waterBodies.forEach((water, index) => {
+                const path = document.createElementNS(svgNS, "path");
+                path.setAttribute("d", water.path);
+                path.setAttribute("fill", water.fill);
+                path.setAttribute("stroke", water.border);
+                path.setAttribute("stroke-width", "1");
+                path.setAttribute("class", "map-water");
+                svg.appendChild(path);
+            });
+            
+            // Draw regions
+            regions.forEach((region, index) => {
+                const path = document.createElementNS(svgNS, "path");
+                path.setAttribute("d", region.path);
+                path.setAttribute("fill", region.fill);
+                path.setAttribute("stroke", region.border);
+                path.setAttribute("stroke-width", "1.5");
+                path.setAttribute("class", "map-region");
+                path.setAttribute("data-name", region.name);
+                
+                // Add hover and click effects
+                path.addEventListener("mouseenter", function(e) {
+                    this.setAttribute("fill", region.hover);
+                    this.setAttribute("stroke-width", "2");
+                    this.style.filter = "drop-shadow(0px 2px 3px rgba(0,0,0,0.2))";
+                    
+                    // Show tooltip
+                    tooltip.textContent = region.name;
+                    tooltip.style.opacity = "1";
+                    
+                    // Position tooltip near mouse
+                    const rect = mapContainer.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width * 100;
+                    const y = (e.clientY - rect.top) / rect.height * 100;
+                    
+                    tooltip.style.left = x + "%";
+                    tooltip.style.top = y + "%";
+                    
+                    // Highlight the corresponding list item
+                    document.querySelectorAll('.coverage-list li').forEach(li => {
+                        if (li.textContent.includes(region.name)) {
+                            li.style.backgroundColor = "var(--card-hover)";
+                            li.style.transform = "translateX(5px)";
+                        }
+                    });
+                });
+                
+                path.addEventListener("mousemove", function(e) {
+                    // Update tooltip position with mouse
+                    const rect = mapContainer.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width * 100;
+                    const y = (e.clientY - rect.top) / rect.height * 100;
+                    
+                    tooltip.style.left = x + "%";
+                    tooltip.style.top = (y - 5) + "%"; // Slight offset above cursor
+                });
+                
+                path.addEventListener("mouseleave", function() {
+                    this.setAttribute("fill", region.fill);
+                    this.setAttribute("stroke-width", "1.5");
+                    this.style.filter = "none";
+                    tooltip.style.opacity = "0";
+                    
+                    // Remove highlight from list items
+                    document.querySelectorAll('.coverage-list li').forEach(li => {
+                        li.style.backgroundColor = "";
+                        li.style.transform = "";
+                    });
+                });
+                
+                path.addEventListener("click", function() {
+                    // Find the corresponding list item and highlight it
+                    const areaName = this.getAttribute('data-name');
+                    document.querySelectorAll('.coverage-list li').forEach(li => {
+                        li.style.fontWeight = "normal";
+                        li.style.backgroundColor = "";
+                        li.style.transform = "";
+                        
+                        if (li.textContent.includes(areaName)) {
+                            li.style.fontWeight = "bold";
+                            li.style.backgroundColor = "var(--card-hover)";
+                            li.style.transform = "translateX(5px)";
+                        }
+                    });
+                });
+                
+                svg.appendChild(path);
+            });
+            
+            // Draw roads (on top of regions)
+            roads.forEach((road, index) => {
+                const path = document.createElementNS(svgNS, "path");
+                path.setAttribute("d", road.path);
+                path.setAttribute("stroke", road.stroke);
+                path.setAttribute("stroke-width", road.width);
+                path.setAttribute("fill", "none");
+                path.setAttribute("class", "map-road");
+                svg.appendChild(path);
+            });
+            
+            // Add compass rose
+            const compass = document.createElementNS(svgNS, "g");
+            compass.setAttribute("transform", "translate(60, 60) scale(0.5)");
+            
+            const circle = document.createElementNS(svgNS, "circle");
+            circle.setAttribute("cx", "50");
+            circle.setAttribute("cy", "50");
+            circle.setAttribute("r", "45");
+            circle.setAttribute("fill", "rgba(255,255,255,0.8)");
+            circle.setAttribute("stroke", "var(--accent)");
+            circle.setAttribute("stroke-width", "2");
+            compass.appendChild(circle);
+            
+            // Compass arrows
+            const directions = [
+                {letter: "N", x: 50, y: 10, rotation: 0},
+                {letter: "E", x: 90, y: 50, rotation: 90},
+                {letter: "S", x: 50, y: 90, rotation: 180},
+                {letter: "W", x: 10, y: 50, rotation: 270}
+            ];
+            
+            directions.forEach(dir => {
+                // Direction pointer
+                const pointer = document.createElementNS(svgNS, "path");
+                
+                if (dir.letter === "N") {
+                    // Make North arrow distinct
+                    pointer.setAttribute("d", "M50,15 L55,30 L50,25 L45,30 Z");
+                    pointer.setAttribute("fill", "var(--accent)");
+                } else {
+                    pointer.setAttribute("d", "M50,45 L53,50 L50,55 L47,50 Z");
+                    pointer.setAttribute("fill", "var(--text-muted)");
+                    pointer.setAttribute("transform", `rotate(${dir.rotation}, 50, 50)`);
+                }
+                
+                compass.appendChild(pointer);
+                
+                // Direction label
+                const label = document.createElementNS(svgNS, "text");
+                label.setAttribute("x", dir.x);
+                label.setAttribute("y", dir.y);
+                label.setAttribute("text-anchor", "middle");
+                label.setAttribute("dominant-baseline", "middle");
+                label.setAttribute("font-size", "12");
+                label.setAttribute("font-weight", dir.letter === "N" ? "bold" : "normal");
+                label.setAttribute("fill", dir.letter === "N" ? "var(--accent)" : "var(--text-muted)");
+                label.textContent = dir.letter;
+                compass.appendChild(label);
+            });
+            
+            svg.appendChild(compass);
+            
+            // Add scale indicator
+            const scale = document.createElementNS(svgNS, "g");
+            scale.setAttribute("transform", "translate(650, 550)");
+            
+            const scaleLine = document.createElementNS(svgNS, "line");
+            scaleLine.setAttribute("x1", "0");
+            scaleLine.setAttribute("y1", "0");
+            scaleLine.setAttribute("x2", "100");
+            scaleLine.setAttribute("y2", "0");
+            scaleLine.setAttribute("stroke", "var(--text-muted)");
+            scaleLine.setAttribute("stroke-width", "2");
+            scale.appendChild(scaleLine);
+            
+            // Scale ticks
+            [0, 25, 50, 75, 100].forEach(x => {
+                const tick = document.createElementNS(svgNS, "line");
+                tick.setAttribute("x1", x);
+                tick.setAttribute("y1", "-5");
+                tick.setAttribute("x2", x);
+                tick.setAttribute("y2", "5");
+                tick.setAttribute("stroke", "var(--text-muted)");
+                tick.setAttribute("stroke-width", "1");
+                scale.appendChild(tick);
+            });
+            
+            const scaleLabel = document.createElementNS(svgNS, "text");
+            scaleLabel.setAttribute("x", "50");
+            scaleLabel.setAttribute("y", "15");
+            scaleLabel.setAttribute("text-anchor", "middle");
+            scaleLabel.setAttribute("font-size", "8");
+            scaleLabel.setAttribute("fill", "var(--text-muted)");
+            scaleLabel.textContent = "0 10 20 30km";
+            scale.appendChild(scaleLabel);
+            
+            svg.appendChild(scale);
+        }
+        
+        // Language Translations
+        const translations = {
+            en: {
+                heroTitle: "Montreal's Premier Mortgage Experience",
+                heroText: "Discreet, expert guidance for discerning buyers.<br>Unlock exclusive rates and tailored solutions for your Montreal dream home.",
+                heroCalculator: "Calculate Your Rate",
+                heroAppointment: "Book a Free Call",
+                introTitle: "Your Trusted Montreal Mortgage Partner",
+                introText: "With years of experience and a passion for helping Montrealers achieve their dreams, I guide you through every step of your home buying journey. My commitment: clarity, transparency, and the best rates--so you can buy with confidence.",
+                introPrequalifyBtn: "Pre-Qualification",
+                introAppointmentBtn: "Schedule a Call",
+                introName: "Vladimir Egnatosyan",
+                introRole: "Mortgage Representative<br>Desjardins",
+                introTitleUnder: "Mortgage Representative<br>Desjardins",
+                coverageTitle: "Montreal & Surrounding Areas Covered",
+                blogTitle: "Latest Blog Insights",
+                ctaTitle: "Ready to Qualify for Your Montreal Home?",
+                ctaText: "Book a free, no-obligation call with a mortgage expert and get personalized advice for your situation.",
+                ctaBtn: "Book My Free Call",
+                navCalculator: "Calculator",
+                navBlog: "Blog",
+                navAppointment: "Book Appointment",
+                footerCalculator: "Calculator",
+                footerBlog: "Blog",
+                footerAppointment: "Book Appointment",
+                footerCopyright: "© 2025 Montreal Mortgage. All rights reserved."
+            },
+            fr: {
+                heroTitle: "L'expérience hypothécaire de premier plan à Montréal",
+                heroText: "Conseils experts et discrets pour les acheteurs exigeants.<br>Débloquez des taux exclusifs et des solutions sur mesure pour votre maison de rêve à Montréal.",
+                heroCalculator: "Calculer votre taux",
+                heroAppointment: "Réserver un appel gratuit",
+                introTitle: "Votre partenaire hypothécaire de confiance à Montréal",
+                introText: "Avec des années d'expérience et une passion pour aider les Montréalais à réaliser leurs rêves, je vous guide à chaque étape de votre parcours d'achat de maison. Mon engagement : clarté, transparence et les meilleurs taux pour acheter en toute confiance.",
+                introPrequalifyBtn: "Pré-qualification",
+                introAppointmentBtn: "Planifier un appel",
+                introName: "Vladimir Egnatosyan",
+                introRole: "Réprésentant hypothécaire<br>Desjardins",
+                introTitleUnder: "Réprésentant hypothécaire<br>Desjardins",
+                coverageTitle: "Montréal et les régions environnantes couvertes",
+                blogTitle: "Dernières informations du blog",
+                ctaTitle: "Prêt à vous qualifier pour votre maison à Montréal ?",
+                ctaText: "Réservez un appel gratuit et sans engagement avec un expert hypothécaire et obtenez des conseils personnalisés pour votre situation.",
+                ctaBtn: "Réserver mon appel gratuit",
+                navCalculator: "Simulateur",
+                navBlog: "Blog",
+                navAppointment: "Prendre rendez-vous",
+                footerCalculator: "Simulateur",
+                footerBlog: "Blog",
+                footerAppointment: "Prendre rendez-vous",
+                footerCopyright: "© 2025 Hypothèque Montréal. Tous droits réservés."
+            },
+            es: {
+                heroTitle: "La experiencia hipotecaria líder en Montreal",
+                heroText: "Asesoramiento experto y discreto para compradores exigentes.<br>Desbloquea tasas exclusivas y soluciones personalizadas para tu hogar soñado en Montreal.",
+                heroCalculator: "Calcula tu tasa",
+                heroAppointment: "Reserva una llamada gratis",
+                introTitle: "Tu socio hipotecario de confianza en Montreal",
+                introText: "Con años de experiencia y una pasión por ayudar a los habitantes de Montreal a alcanzar sus sueños, te guío en cada paso de tu viaje de compra de vivienda. Mi compromiso: claridad, transparencia y las mejores tasas para que compres con confianza.",
+                introPrequalifyBtn: "Precalificación",
+                introAppointmentBtn: "Programar una llamada",
+                introName: "Vladimir Egnatosyan",
+                introRole: "Representante hipotecario<br>Desjardins",
+                introTitleUnder: "Representante hipotecario<br>Desjardins",
+                coverageTitle: "Montreal y áreas circundantes cubiertas",
+                blogTitle: "Últimas perspectivas del blog",
+                ctaTitle: "¿Listo para calificar para tu hogar en Montreal?",
+                ctaText: "Reserva una llamada gratuita y sin compromiso con un experto hipotecario y obtén asesoramiento personalizado para tu situación.",
+                ctaBtn: "Reserva mi llamada gratis",
+                navCalculator: "Calculadora",
+                navBlog: "Blog",
+                navAppointment: "Reservar cita",
+                footerCalculator: "Calculadora",
+                footerBlog: "Blog",
+                footerAppointment: "Reservar cita",
+                footerCopyright: "© 2025 Hipoteca Montreal. Todos los derechos reservados."
+            },
+            ru: {
+                heroTitle: "Ведущий ипотечный опыт в Монреале",
+                heroText: "Дискретное и профессиональное сопровождение для взыскательных покупателей.<br>Откройте эксклюзивные ставки и индивидуальные решения для дома вашей мечты в Монреале.",
+                heroCalculator: "Рассчитать ставку",
+                heroAppointment: "Записаться на бесплатный звонок",
+                introTitle: "Ваш надежный ипотечный партнер в Монреале",
+                introText: "С многолетним опытом и страстью к помощи жителям Монреаля в достижении их мечты, я сопровождаю вас на каждом этапе пути к покупке дома. Мое обязательство: ясность, прозрачность и лучшие ставки, чтобы вы могли покупать с уверенностью.",
+                introPrequalifyBtn: "Предварительная квалификация",
+                introAppointmentBtn: "Запланировать звонок",
+                introName: "Владимир Егнатошян",
+                introRole: "Ипотечный представитель<br>Desjardins",
+                introTitleUnder: "Ипотечный представитель<br>Desjardins",
+                coverageTitle: "Монреаль и прилегающие районы",
+                blogTitle: "Последние новости блога",
+                ctaTitle: "Готовы пройти квалификацию для дома в Монреале?",
+                ctaText: "Запишитесь на бесплатную консультацию без обязательств с ипотечным экспертом и получите персонализированные рекомендации для вашей ситуации.",
+                ctaBtn: "Записаться на бесплатный звонок",
+                navCalculator: "Калькулятор",
+                navBlog: "Блог",
+                navAppointment: "Записаться на консультацию",
+                footerCalculator: "Калькулятор",
+                footerBlog: "Блог",
+                footerAppointment: "Записаться на консультацию",
+                footerCopyright: "© 2025 Ипотека Монреаля. Все права защищены."
             }
-          </script>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-4">Pages</h4>
-          <ul class="space-y-2 text-sm text-gray-300">
-            <li><a href="#" class="hover:text-accent-color transition">Home</a></li>
-            <li><a href="#" class="hover:text-accent-color transition">About Us</a></li>
-            <li><a href="#calculator" class="hover:text-accent-color transition">Mortgage Calculator</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-4">Resources</h4>
-          <ul class="space-y-2 text-sm text-gray-300">
-            <li><a href="#" class="hover:text-accent-color transition">Blog</a></li>
-            <li><a href="#" class="hover:text-accent-color transition">Guides</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-4">Contact</h4>
-          <ul class="space-y-2 text-sm text-gray-300">
-            <li><a href="tel:+15145551234" class="hover:text-accent-color transition">+1 (514) 555-1234</a></li>
-            <li><a href="mailto:info@montrealmortgages.com" class="hover:text-accent-color transition">info@montrealmortgages.com</a></li>
-            <li>1234 Saint-Catherine St W, Montreal, QC H3G 1P1</li>
-          </ul>
-          <div class="flex gap-3 mt-4">
-            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></a>
-            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7v-3h3V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.91 8-4.94 8-9.95z"/></svg></a>
-            <a href="#" class="text-gray-300 hover:text-accent-color transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 15h-3v-2h3v-3h-3V9h3V7h-5v10h5v-2zM7 7h3v10H7V7z"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <div class="flex justify-between items-center mt-8 text-sm text-gray-400">
-        <p>Designed by Montreal Mortgages</p>
-        <p>© 2025 Montreal Mortgages. All Rights Reserved.</p>
-      </div>
-    </div>
-  </footer>
+        };
 
-  <!-- Smooth Scroll and Theme Toggle Scripts -->
-  <script>
-    // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+        // Update language content
+        function updateLanguage() {
+            try {
+                const lang = window.currentLanguage || 'en';
+                
+                // Update all translated elements
+                document.getElementById('hero-title').textContent = translations[lang].heroTitle;
+                document.getElementById('hero-text').innerHTML = translations[lang].heroText;
+                document.getElementById('hero-calculator').innerHTML = `<i class="fas fa-calculator"></i> ${translations[lang].heroCalculator}`;
+                document.getElementById('hero-appointment').innerHTML = `<i class="fas fa-calendar-check"></i> ${translations[lang].heroAppointment}`;
+                document.getElementById('intro-title').textContent = translations[lang].introTitle;
+                document.getElementById('intro-text').textContent = translations[lang].introText;
+                document.getElementById('intro-prequalify-btn').innerHTML = `<i class="fas fa-calculator"></i> ${translations[lang].introPrequalifyBtn}`;
+                document.getElementById('intro-appointment-btn').innerHTML = `<i class="fas fa-calendar-check"></i> ${translations[lang].introAppointmentBtn}`;
+                document.getElementById('intro-name').innerHTML = `${translations[lang].introName}<br><span style="font-size:0.95rem; font-weight:400;">${translations[lang].introRole}</span>`;
+                document.getElementById('intro-title-under').innerHTML = translations[lang].introTitleUnder;
+                document.getElementById('coverage-title').textContent = translations[lang].coverageTitle;
+                document.getElementById('blog-title').textContent = translations[lang].blogTitle;
+                document.getElementById('cta-title').textContent = translations[lang].ctaTitle;
+                document.getElementById('cta-text').textContent = translations[lang].ctaText;
+                document.getElementById('cta-btn').innerHTML = `<i class="fas fa-calendar-plus"></i> ${translations[lang].ctaBtn}`;
+                document.getElementById('nav-calculator').textContent = translations[lang].navCalculator;
+                document.getElementById('nav-blog').textContent = translations[lang].navBlog;
+                document.getElementById('nav-appointment').textContent = translations[lang].navAppointment;
+                document.getElementById('footer-calculator').textContent = translations[lang].footerCalculator;
+                document.getElementById('footer-blog').textContent = translations[lang].footerBlog;
+                document.getElementById('footer-appointment').textContent = translations[lang].footerAppointment;
+                document.getElementById('footer-copyright').textContent = translations[lang].footerCopyright;
+            } catch (e) {
+                console.warn('Error updating language:', e);
+            }
+        }
+
+        // Theme toggle functionality - without localStorage
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-toggle').setAttribute('aria-pressed', 'true');
+                document.getElementById('sun-icon').style.display = 'none';
+                document.getElementById('moon-icon').style.display = '';
+                window.currentTheme = 'dark';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.getElementById('theme-toggle').setAttribute('aria-pressed', 'false');
+                document.getElementById('sun-icon').style.display = '';
+                document.getElementById('moon-icon').style.display = 'none';
+                window.currentTheme = 'light';
+            }
+        }
+
+        // Initialize theme and language
+        (function() {
+            try {
+                // Set initial theme based on user preference (without localStorage)
+                const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                setTheme(theme);
+                
+                // Set initial language to default (English)
+                window.currentLanguage = 'en';
+                updateLanguage();
+                
+                // Setup intersection observer for animations
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-in');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+                
+                // Observe all sections except the hero (which is already animated)
+                document.querySelectorAll('.section, .cta-banner').forEach(section => {
+                    observer.observe(section);
+                });
+            } catch (e) {
+                console.warn('Error initializing theme or language:', e);
+            }
+        })();
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the Montreal Map
+            initMontrealMap();
+            // Mobile menu toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const navWrapper = document.querySelector('.nav-wrapper');
+            const navLinks = document.querySelectorAll('#main-nav a');
+            
+            navToggle.addEventListener('click', function() {
+                navWrapper.classList.toggle('active');
+                const isExpanded = navWrapper.classList.contains('active');
+                navToggle.setAttribute('aria-expanded', isExpanded);
+                navToggle.innerHTML = isExpanded ? 
+                    '<i class="fas fa-times"></i>' : 
+                    '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close mobile menu when clicking nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navWrapper.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                setTheme(isDark ? 'light' : 'dark');
+            });
+            
+            // Language selector - without localStorage
+            document.getElementById('language-select').addEventListener('change', function() {
+                window.currentLanguage = this.value;
+                updateLanguage();
+            });
+            
+            // Back to top button
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+                
+                // Add scrolled class to header
+                if (window.pageYOffset > 50) {
+                    document.getElementById('header').classList.add('scrolled');
+                } else {
+                    document.getElementById('header').classList.remove('scrolled');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Dark mode media query listener
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                setTheme(event.matches ? 'dark' : 'light');
+            });
         });
-      });
-    });
-
-    // Theme Toggle
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      document.querySelector('.sun-icon').classList.toggle('hidden');
-      document.querySelector('.moon-icon').classList.toggle('hidden');
-    }
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    if (savedTheme === 'dark') {
-      document.querySelector('.sun-icon').classList.add('hidden');
-      document.querySelector('.moon-icon').classList.remove('hidden');
-    }
-  </script>
+    </script>
 </body>
 </html>
